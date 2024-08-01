@@ -1,0 +1,6 @@
+@OpenMusic.API_HostAddress = http://localhost:5237
+
+GET {{OpenMusic.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
