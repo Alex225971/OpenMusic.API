@@ -1,7 +1,7 @@
 # OpenMusic.API
 
 ## A simple API containing songs, artists, albums, playlists and users
-Intended to be used by my future front-end ANgular, Vue, React and Blazor projects
+Intended to be used by my future front-end Angular, Vue, React and Blazor projects
 
 ### Project goals
 - Use Microsoft ASP.NET Identity & JWTs
