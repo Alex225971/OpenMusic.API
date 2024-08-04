@@ -1,12 +1,20 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenMusic.API.Configurations;
 using OpenMusic.API.Data;
+using OpenMusic.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var connString = builder.Configuration.GetConnectionString("OpenMusicDbConnection");
 // Add services to the container.
 
 builder.Services.AddDbContext<OpenMusicDbContext>(options => options.UseSqlServer(connString));
+
+builder.Services.AddIdentityCore<ApplicationUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<OpenMusicDbContext>();
+
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 

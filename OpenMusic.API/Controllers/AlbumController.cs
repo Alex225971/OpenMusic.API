@@ -1,84 +1,68 @@
 ﻿using API.Controllers;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OpenMusic.API.Data;
+using OpenMusic.API.Models.Album;
+using OpenMusic.API.Repositories;
 
 namespace OpenMusic.API.Controllers
 {
     public class AlbumController : BaseApiController
     {
-        // GET: AlbumController
-        public ActionResult Index()
+        private readonly IAlbumRepository _albumRepo;
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public AlbumController(IAlbumRepository albumRepo, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
-            return View();
+            _albumRepo = albumRepo;
+            _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
 
-        // GET: AlbumController/Details/5
-        public ActionResult Details(int id)
+        // GET: api/Albums
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AlbumReadOnlyDto>>> GetAlbums(int id, IFormCollection collection)
         {
-            return View();
+            var albums = await _albumRepo.GetAllAsync();
+            return Ok(albums);
         }
 
-        // GET: AlbumController/Create
-        public ActionResult Create()
+        // GET: api/Album/5
+        [HttpGet("{id}")]
+        public ActionResult GetAlbum(int id, IFormCollection collection)
         {
-            return View();
+            return Ok();
         }
 
-        // POST: AlbumController/Create
+        // POST: api/Albums
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync(AlbumCreateDto albumDto)
         {
-            try
+            var album = _mapper.Map<Album>(albumDto);
+            if (string.IsNullOrEmpty(albumDto.Image) == false)
             {
-                return RedirectToAction(nameof(Index));
+                album.Image = "";
             }
-            catch
-            {
-                return View();
-            }
+
+            await _albumRepo.AddAsync(album);
+
+            return CreatedAtAction(nameof(GetAlbum), new { id = album.Id }, album);
         }
 
-        // GET: AlbumController/Edit/5
-        public ActionResult Edit(int id)
+        // PUT: api/Album/5
+        [HttpPut("{id}")]
+        public ActionResult EditAlbum(int id, IFormCollection collection)
         {
-            return View();
+            return Ok();
         }
 
-        // POST: AlbumController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        // DELETE: api/Album/5
+        [HttpDelete("{id}")]
+        public ActionResult DeleteAlbum(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AlbumController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AlbumController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Ok();
         }
     }
 }

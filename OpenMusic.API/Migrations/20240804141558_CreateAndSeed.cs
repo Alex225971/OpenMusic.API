@@ -3,14 +3,33 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace OpenMusic.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreateAndSeed : Migration
+    public partial class CreateAndSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Artists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Started = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Ended = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalListeners = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Artists", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -50,6 +69,29 @@ namespace OpenMusic.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Albums",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Year = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArtistId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Albums", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Albums_Artists_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,6 +200,65 @@ namespace OpenMusic.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Songs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArtistId = table.Column<int>(type: "int", nullable: false),
+                    AlbumId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Songs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Songs_Albums_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Albums",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Songs_Artists_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "57f7dbef-2cf8-49c9-956a-3a9e16d6a0a5", null, "Admin", "ADMIN" },
+                    { "8b80bb4a-bceb-4e48-b020-0b42da346212", null, "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "0017d7fe-f844-47fa-96b1-f6f3f280db0f", 0, "077de48d-cb29-4f99-83a0-36aa9cc36106", "user@test.com", false, "System", "User", false, null, "USER@TEST.COM", "USER@TEST.COM", "AQAAAAIAAYagAAAAEMQBn0qQFJyQEvlXSqo+f6mO2x0WEEPjrI2rTi4TPIQ/yGzAcTQREy4V00ZP25vtfg==", null, false, "d41100c2-1335-4780-8cdc-2f342f173f38", false, "user@test.com" },
+                    { "9f86d912-6254-44e6-aa64-d4da31c8a999", 0, "1a76cae1-e2af-4e79-ac1c-4cb1d8c47728", "admin@test.com", false, "System", "Admin", false, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAEJ+033KB2+zGZV6AD3mLJtZ941o/vifqpjUIUuArK7Yn4Fqy1fMgGddS1OdEjaXXtA==", null, false, "d25a3a7b-ed24-4a6e-b0e8-c808ed219fc4", false, "admin@test.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "8b80bb4a-bceb-4e48-b020-0b42da346212", "0017d7fe-f844-47fa-96b1-f6f3f280db0f" },
+                    { "57f7dbef-2cf8-49c9-956a-3a9e16d6a0a5", "9f86d912-6254-44e6-aa64-d4da31c8a999" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Albums_ArtistId",
+                table: "Albums",
+                column: "ArtistId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -196,6 +297,16 @@ namespace OpenMusic.API.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Songs_AlbumId",
+                table: "Songs",
+                column: "AlbumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Songs_ArtistId",
+                table: "Songs",
+                column: "ArtistId");
         }
 
         /// <inheritdoc />
@@ -217,10 +328,19 @@ namespace OpenMusic.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Songs");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Albums");
+
+            migrationBuilder.DropTable(
+                name: "Artists");
         }
     }
 }
