@@ -1,6 +1,10 @@
-﻿namespace OpenMusic.API.Repositories
+﻿using OpenMusic.API.Data;
+using OpenMusic.API.Models.Artist;
+
+namespace OpenMusic.API.Repositories
 {
-    public interface IArtistRepository
+    public interface IArtistRepository : IGenericRepository<Artist>
     {
+        Task<ArtistDetailsDto> GetArtistDetailsAsync(int id);
     }
 }

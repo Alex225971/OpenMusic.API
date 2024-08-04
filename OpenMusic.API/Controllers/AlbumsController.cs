@@ -8,13 +8,13 @@ using OpenMusic.API.Repositories;
 
 namespace OpenMusic.API.Controllers
 {
-    public class AlbumController : BaseApiController
+    public class AlbumsController : BaseApiController
     {
         private readonly IAlbumRepository _albumRepo;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AlbumController(IAlbumRepository albumRepo, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+        public AlbumsController(IAlbumRepository albumRepo, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _albumRepo = albumRepo;
             _mapper = mapper;
@@ -23,7 +23,7 @@ namespace OpenMusic.API.Controllers
 
         // GET: api/Albums
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AlbumReadOnlyDto>>> GetAlbums(int id, IFormCollection collection)
+        public async Task<ActionResult<IEnumerable<AlbumReadOnlyDto>>> GetAlbumsAsync(int id, IFormCollection collection)
         {
             var albums = await _albumRepo.GetAllAsync();
             return Ok(albums);

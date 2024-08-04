@@ -35,9 +35,9 @@ namespace OpenMusic.API.Repositories
             return entity != null;
         }
 
-        public Task<List<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Set<T>().ToListAsync();
         }
 
         public async Task<T> GetAsync(int? id)

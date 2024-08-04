@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public required string Bio { get; set; }
+        public string? Bio { get; set; }
         public DateTime Started { get; set; }
         public DateTime Ended { get; set; }
         public int TotalListeners { get; set; }
