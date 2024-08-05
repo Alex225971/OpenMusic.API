@@ -2,6 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Repositories;
@@ -23,17 +24,30 @@ namespace OpenMusic.API.Controllers
 
         // GET: api/Albums
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AlbumReadOnlyDto>>> GetAlbumsAsync(int id, IFormCollection collection)
+        public async Task<ActionResult<IEnumerable<AlbumReadOnlyDto>>> GetAlbumsAsync()
         {
-            var albums = await _albumRepo.GetAllAsync();
+            var albums = await _albumRepo.GetAllReadOnlyAsync();
             return Ok(albums);
         }
 
-        // GET: api/Album/5
+        // GET: api/Albums/5
         [HttpGet("{id}")]
-        public ActionResult GetAlbum(int id, IFormCollection collection)
+        public async Task<ActionResult> GetAlbumAsync(int id)
         {
-            return Ok();
+            try
+            {
+                var album = await _albumRepo.GetAsync(id);
+
+                if (album == null)
+                {
+                    return NotFound();
+                }
+                return Ok(album);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         // POST: api/Albums
@@ -48,21 +62,63 @@ namespace OpenMusic.API.Controllers
 
             await _albumRepo.AddAsync(album);
 
-            return CreatedAtAction(nameof(GetAlbum), new { id = album.Id }, album);
+            return CreatedAtAction(nameof(GetAlbumAsync), new { id = album.Id }, album);
         }
 
-        // PUT: api/Album/5
+        // PUT: api/Albums/5
         [HttpPut("{id}")]
-        public ActionResult EditAlbum(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAlbum(int id, AlbumUpdateDto albumDto)
         {
-            return Ok();
+            if (id != albumDto.Id)
+            {
+                return BadRequest();
+            }
+            var album = await _albumRepo.GetAsync(id);
+
+            if (album == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(albumDto, album);
+
+            try
+            {
+                await _albumRepo.UpdateAsync(album);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await AlbumExistsAsync(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // DELETE: api/Album/5
+        // DELETE: api/Albums/5
         [HttpDelete("{id}")]
-        public ActionResult DeleteAlbum(int id, IFormCollection collection)
+        public async Task<ActionResult> DeleteAlbum(int id)
         {
-            return Ok();
+            var album = await _albumRepo.GetAsync(id);
+            if (album == null)
+            {
+                return NotFound();
+            }
+
+            await _albumRepo.DeleteAsync(id);
+
+            return NoContent();
+        }
+
+        private async Task<bool> AlbumExistsAsync(int id)
+        {
+            return await _albumRepo.Exists(id);
         }
     }
 }

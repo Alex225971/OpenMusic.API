@@ -22,7 +22,7 @@ namespace OpenMusic.API.Repositories
             var artist = await _dbContext.Artists
                     .Include(a => a.Albums)
                     .ProjectTo<ArtistDetailsDto>(_mapper.ConfigurationProvider)
-                    .SingleOrDefaultAsync(a => a.Id == id);
+                    .FirstAsync(a => a.Id == id);
             return artist;
         }
     }

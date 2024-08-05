@@ -2,7 +2,7 @@
 
 namespace OpenMusic.API.Models.Album
 {
-    public class AlbumCreateDto : BaseDto
+    public class AlbumCreateDto
     {
         [Required]
         [StringLength(50)]

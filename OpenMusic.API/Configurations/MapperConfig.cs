@@ -12,16 +12,13 @@ namespace OpenMusic.API.Configurations
             CreateMap<AlbumDetailsDto, Album>().ReverseMap();
             CreateMap<AlbumReadOnlyDto, Album>().ReverseMap();
             CreateMap<AlbumCreateDto, Album>().ReverseMap();
-            CreateMap<Album, AlbumReadOnlyDto>()
-                .ForMember(a => a.ArtistName, a => a.MapFrom(map => $"{map.Artist.Name}"))
-                .ReverseMap();
-            CreateMap<Album, AlbumDetailsDto>()
-                .ForMember(a => a.ArtistName, a => a.MapFrom(map => $"{map.Artist.Name}"))
-                .ReverseMap();
+            CreateMap<AlbumUpdateDto, Album>().ReverseMap();
+
 
             CreateMap<ArtistDetailsDto, Artist>().ReverseMap();
             CreateMap<ArtistReadOnlyDto, Artist>().ReverseMap();
             CreateMap<ArtistCreateDto, Artist>().ReverseMap();
+            CreateMap<ArtistUpdateDto, Artist>().ReverseMap();
 
         }
     }

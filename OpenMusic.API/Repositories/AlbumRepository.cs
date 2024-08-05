@@ -22,9 +22,9 @@ namespace OpenMusic.API.Repositories
             return await _dbContext.Albums.Include(a => a.Artist).ProjectTo<AlbumDetailsDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public Task<List<AlbumReadOnlyDto>> GetAllReadOnlyAsync()
+        public async Task<List<AlbumReadOnlyDto>> GetAllReadOnlyAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Albums.Include(b => b.Artist).ProjectTo<AlbumReadOnlyDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<AlbumDetailsDto> GetDetailsAsync(int id)
