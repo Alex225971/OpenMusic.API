@@ -1,4 +1,4 @@
-﻿namespace BookStoreApp.API.Models.User
+﻿namespace OpenMusic.API.Models.User
 {
     public class AuthResponse
     {

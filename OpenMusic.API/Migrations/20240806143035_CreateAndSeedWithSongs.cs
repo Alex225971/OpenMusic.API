@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OpenMusic.API.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateAndSeed : Migration
+    public partial class CreateAndSeedWithSongs : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace OpenMusic.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Started = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Ended = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalListeners = table.Column<int>(type: "int", nullable: false)
@@ -206,10 +206,12 @@ namespace OpenMusic.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArtistId = table.Column<int>(type: "int", nullable: false),
-                    AlbumId = table.Column<int>(type: "int", nullable: true)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SongUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArtistId = table.Column<int>(type: "int", nullable: true),
+                    AlbumId = table.Column<int>(type: "int", nullable: true),
+                    ReleaseDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    TotalListeners = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,8 +225,7 @@ namespace OpenMusic.API.Migrations
                         name: "FK_Songs_Artists_ArtistId",
                         column: x => x.ArtistId,
                         principalTable: "Artists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -241,8 +242,8 @@ namespace OpenMusic.API.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "0017d7fe-f844-47fa-96b1-f6f3f280db0f", 0, "077de48d-cb29-4f99-83a0-36aa9cc36106", "user@test.com", false, "System", "User", false, null, "USER@TEST.COM", "USER@TEST.COM", "AQAAAAIAAYagAAAAEMQBn0qQFJyQEvlXSqo+f6mO2x0WEEPjrI2rTi4TPIQ/yGzAcTQREy4V00ZP25vtfg==", null, false, "d41100c2-1335-4780-8cdc-2f342f173f38", false, "user@test.com" },
-                    { "9f86d912-6254-44e6-aa64-d4da31c8a999", 0, "1a76cae1-e2af-4e79-ac1c-4cb1d8c47728", "admin@test.com", false, "System", "Admin", false, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAEJ+033KB2+zGZV6AD3mLJtZ941o/vifqpjUIUuArK7Yn4Fqy1fMgGddS1OdEjaXXtA==", null, false, "d25a3a7b-ed24-4a6e-b0e8-c808ed219fc4", false, "admin@test.com" }
+                    { "0017d7fe-f844-47fa-96b1-f6f3f280db0f", 0, "6128f135-1776-4dd9-9e5b-24c6c755b53a", "user@test.com", false, "System", "User", false, null, "USER@TEST.COM", "USER@TEST.COM", "AQAAAAIAAYagAAAAEE/095QiDIvEeX6IEd+lio0lOlHiY4OSZLY2g9/rxTVZcLtlyRM0yG5jdDKZRAoS+Q==", null, false, "22b7e4c2-2646-4ee7-8b3f-0841f6dbe0c9", false, "user@test.com" },
+                    { "9f86d912-6254-44e6-aa64-d4da31c8a999", 0, "e5042d3b-b77f-4364-bbf7-cd162c6aad43", "admin@test.com", false, "System", "Admin", false, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAEORA1VuFYfkqle0ri+j9kFioOPvARSuBO/IfSu8hijdzQ8NLsUOtJn2rxM2qutGMdg==", null, false, "de902214-8295-4c12-9960-aac0c27f72a7", false, "admin@test.com" }
                 });
 
             migrationBuilder.InsertData(

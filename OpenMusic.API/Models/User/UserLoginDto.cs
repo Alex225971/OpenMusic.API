@@ -6,7 +6,7 @@ namespace OpenMusic.API.Models.User
     {
         [Required]
         [EmailAddress]
-        public required int Email { get; set; }
+        public required string Email { get; set; }
         [Required]
         public required string Password { get; set; }
     }

@@ -12,8 +12,8 @@ using OpenMusic.API.Data;
 namespace OpenMusic.API.Migrations
 {
     [DbContext(typeof(OpenMusicDbContext))]
-    [Migration("20240804141558_CreateAndSeed")]
-    partial class CreateAndSeed
+    [Migration("20240806143035_CreateAndSeedWithSongs")]
+    partial class CreateAndSeedWithSongs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -293,7 +293,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "9f86d912-6254-44e6-aa64-d4da31c8a999",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1a76cae1-e2af-4e79-ac1c-4cb1d8c47728",
+                            ConcurrencyStamp = "e5042d3b-b77f-4364-bbf7-cd162c6aad43",
                             Email = "admin@test.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -301,9 +301,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@TEST.COM",
                             NormalizedUserName = "ADMIN@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ+033KB2+zGZV6AD3mLJtZ941o/vifqpjUIUuArK7Yn4Fqy1fMgGddS1OdEjaXXtA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEORA1VuFYfkqle0ri+j9kFioOPvARSuBO/IfSu8hijdzQ8NLsUOtJn2rxM2qutGMdg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d25a3a7b-ed24-4a6e-b0e8-c808ed219fc4",
+                            SecurityStamp = "de902214-8295-4c12-9960-aac0c27f72a7",
                             TwoFactorEnabled = false,
                             UserName = "admin@test.com"
                         },
@@ -311,7 +311,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "0017d7fe-f844-47fa-96b1-f6f3f280db0f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "077de48d-cb29-4f99-83a0-36aa9cc36106",
+                            ConcurrencyStamp = "6128f135-1776-4dd9-9e5b-24c6c755b53a",
                             Email = "user@test.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -319,9 +319,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@TEST.COM",
                             NormalizedUserName = "USER@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMQBn0qQFJyQEvlXSqo+f6mO2x0WEEPjrI2rTi4TPIQ/yGzAcTQREy4V00ZP25vtfg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE/095QiDIvEeX6IEd+lio0lOlHiY4OSZLY2g9/rxTVZcLtlyRM0yG5jdDKZRAoS+Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d41100c2-1335-4780-8cdc-2f342f173f38",
+                            SecurityStamp = "22b7e4c2-2646-4ee7-8b3f-0841f6dbe0c9",
                             TwoFactorEnabled = false,
                             UserName = "user@test.com"
                         });
@@ -336,7 +336,6 @@ namespace OpenMusic.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Bio")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Ended")
@@ -368,16 +367,22 @@ namespace OpenMusic.API.Migrations
                     b.Property<int?>("AlbumId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ArtistId")
+                    b.Property<int?>("ArtistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<DateOnly?>("ReleaseDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("SongUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Url")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalListeners")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -452,15 +457,15 @@ namespace OpenMusic.API.Migrations
 
             modelBuilder.Entity("OpenMusic.API.Data.Song", b =>
                 {
-                    b.HasOne("OpenMusic.API.Data.Album", null)
+                    b.HasOne("OpenMusic.API.Data.Album", "Album")
                         .WithMany("Songs")
                         .HasForeignKey("AlbumId");
 
                     b.HasOne("OpenMusic.API.Data.Artist", "Artist")
                         .WithMany("Songs")
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArtistId");
+
+                    b.Navigation("Album");
 
                     b.Navigation("Artist");
                 });

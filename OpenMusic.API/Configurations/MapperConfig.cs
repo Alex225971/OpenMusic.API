@@ -2,6 +2,7 @@
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Artist;
+using OpenMusic.API.Models.User;
 
 namespace OpenMusic.API.Configurations
 {
@@ -20,6 +21,7 @@ namespace OpenMusic.API.Configurations
             CreateMap<ArtistCreateDto, Artist>().ReverseMap();
             CreateMap<ArtistUpdateDto, Artist>().ReverseMap();
 
+            CreateMap<ApplicationUser, UserDto>().ReverseMap();
         }
     }
 }

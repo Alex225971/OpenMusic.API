@@ -8,7 +8,7 @@
         public DateTime Started { get; set; }
         public DateTime Ended { get; set; }
         public int TotalListeners { get; set; }
-        public virtual ICollection<Song>? Songs { get; set; } = new List<Song>();
+        public virtual ICollection<Song> Songs { get; set; } = new List<Song>();
         public virtual ICollection<Album>? Albums { get; set; } = new List<Album>();
     }
 }
