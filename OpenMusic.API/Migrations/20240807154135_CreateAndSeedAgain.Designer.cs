@@ -12,8 +12,8 @@ using OpenMusic.API.Data;
 namespace OpenMusic.API.Migrations
 {
     [DbContext(typeof(OpenMusicDbContext))]
-    [Migration("20240806143035_CreateAndSeedWithSongs")]
-    partial class CreateAndSeedWithSongs
+    [Migration("20240807154135_CreateAndSeedAgain")]
+    partial class CreateAndSeedAgain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -205,9 +205,8 @@ namespace OpenMusic.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Year")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -293,7 +292,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "9f86d912-6254-44e6-aa64-d4da31c8a999",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e5042d3b-b77f-4364-bbf7-cd162c6aad43",
+                            ConcurrencyStamp = "0fa79b49-d25b-4331-9696-57e050ce0716",
                             Email = "admin@test.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -301,9 +300,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@TEST.COM",
                             NormalizedUserName = "ADMIN@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEORA1VuFYfkqle0ri+j9kFioOPvARSuBO/IfSu8hijdzQ8NLsUOtJn2rxM2qutGMdg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFFo1a4ow5JWF3v+e5fwxfaoCIMvREsup94Bve8JbNYdOWU5NSU8Nax5Pnm7/hAZfQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "de902214-8295-4c12-9960-aac0c27f72a7",
+                            SecurityStamp = "d1947e1a-5d61-4cb6-9ed7-8ec36bb177e5",
                             TwoFactorEnabled = false,
                             UserName = "admin@test.com"
                         },
@@ -311,7 +310,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "0017d7fe-f844-47fa-96b1-f6f3f280db0f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6128f135-1776-4dd9-9e5b-24c6c755b53a",
+                            ConcurrencyStamp = "41c8343b-f1f0-4ae3-a2c7-45edb2f22424",
                             Email = "user@test.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -319,9 +318,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@TEST.COM",
                             NormalizedUserName = "USER@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE/095QiDIvEeX6IEd+lio0lOlHiY4OSZLY2g9/rxTVZcLtlyRM0yG5jdDKZRAoS+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELCpf6phxfbjV39eCG/4/KLOxFjfwggqtjYb1TsjAHT82aOhpZWxNvNek6F5XHvb7w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "22b7e4c2-2646-4ee7-8b3f-0841f6dbe0c9",
+                            SecurityStamp = "28b0b5e0-b5eb-4578-819f-acecb6b88c5d",
                             TwoFactorEnabled = false,
                             UserName = "user@test.com"
                         });
