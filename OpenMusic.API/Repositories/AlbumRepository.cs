@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
+using OpenMusic.API.Models.Artist;
 
 namespace OpenMusic.API.Repositories
 {
@@ -17,9 +18,12 @@ namespace OpenMusic.API.Repositories
             _mapper = mapper;
         }
 
-        public async Task<List<AlbumDetailsDto>> GetAlbumDetailsAsync(int id)
+        public async Task<AlbumDetailsDto> GetAlbumDetailsAsync(int id)
         {
-            return await _dbContext.Albums.Include(a => a.Artist).ProjectTo<AlbumDetailsDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _dbContext.Albums
+                .Include(a => a.Songs)
+                .ProjectTo<AlbumDetailsDto>(_mapper.ConfigurationProvider)
+                .FirstAsync(a => a.Id == id);
         }
 
         public async Task<List<AlbumReadOnlyDto>> GetAllReadOnlyAsync()

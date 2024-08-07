@@ -51,7 +51,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // POST: api/Albums
-        [HttpPost]
+        [HttpPost("CreateAlbumAsync")]
         public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync(AlbumCreateDto albumDto)
         {
             var album = _mapper.Map<Album>(albumDto);
@@ -62,7 +62,7 @@ namespace OpenMusic.API.Controllers
 
             await _albumRepo.AddAsync(album);
 
-            return CreatedAtAction(nameof(GetAlbumAsync), new { id = album.Id }, album);
+            return CreatedAtAction("CreateSAlbumAsync", new { id = album.Id }, album);
         }
 
         // PUT: api/Albums/5

@@ -33,7 +33,7 @@ namespace OpenMusic.API.Controllers
 
         // GET: api/Artists/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ArtistDetailsDto>> GetArtistAsync(int id)
+        public async Task<ActionResult<ArtistReadOnlyDto>> GetArtistAsync(int id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace OpenMusic.API.Controllers
 
         // POST: api/Artists
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("CreateArtistAsync")]
         public async Task<ActionResult<ArtistCreateDto>> CreateArtistAsync(ArtistCreateDto artistDto)
         {
             try
@@ -61,11 +61,11 @@ namespace OpenMusic.API.Controllers
                 var artist = _mapper.Map<Artist>(artistDto);
                 await _artistRepo.AddAsync(artist);
 
-                return CreatedAtAction(nameof(GetArtistsAsync), new { id = artist.Id }, artist);
+                return CreatedAtAction("CreateArtistAsync", new { id = artist.Id }, artist);
             }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, e);
             }
         }
 

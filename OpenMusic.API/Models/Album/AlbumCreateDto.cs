@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OpenMusic.API.Models.Song;
+using System.ComponentModel.DataAnnotations;
 
 namespace OpenMusic.API.Models.Album
 {
@@ -12,5 +13,6 @@ namespace OpenMusic.API.Models.Album
         public string? Genre { get; set; }
         [Required]
         public int ArtistId { get; set; }
+        public List<SongCreateDto>? Songs { get; set; }
     }
 }

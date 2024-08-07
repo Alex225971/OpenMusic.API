@@ -12,7 +12,7 @@ namespace OpenMusic.API.Models.Artist
         public DateTime? Started { get; set; }
         public DateTime? Ended { get; set; }
         public int? TotalListeners { get; set; }
-        public List<AlbumReadOnlyDto> Albums { get; set; }
+        public List<AlbumReadOnlyDto>? Albums { get; set; }
 
     }
 }

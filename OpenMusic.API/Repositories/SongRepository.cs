@@ -1,48 +1,35 @@
-﻿using OpenMusic.API.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using OpenMusic.API.Data;
+using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Song;
 
 namespace OpenMusic.API.Repositories
 {
-    public class SongRepository : ISongRepository
+    public class SongRepository : GenericRepository<Song>, ISongRepository
     {
-        public Task<Song> AddAsync(Song entity)
+        private readonly OpenMusicDbContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public SongRepository(OpenMusicDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public Task DeleteAsync(int? id)
+        public async Task<SongDetailsDto> GetSongDetailsAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Songs
+                .ProjectTo<SongDetailsDto>(_mapper.ConfigurationProvider).FirstAsync(s => s.Id == id); ;
         }
 
-        public Task<bool> Exists(int? id)
+        public async Task<SongPlaybackDto> GetForPlaybackAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Song>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Song> GetAsync(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<SongDetailsDto> GetDetailsAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<SongPlaybackDto>> GetForPlaybackAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Song entity)
-        {
-            throw new NotImplementedException();
+            return await _dbContext.Songs
+                .Include(s => s.Artist)
+                .Include(s => s.Album)
+                .ProjectTo<SongPlaybackDto>(_mapper.ConfigurationProvider).FirstAsync();
         }
     }
 }
