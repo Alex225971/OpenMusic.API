@@ -30,6 +30,7 @@ namespace OpenMusic.API.Configurations
             CreateMap<string, DateOnly>().ConvertUsing<DateTimeConverter>();
 
             CreateMap<SongPlaybackDto, Song>().ReverseMap();
+            CreateMap<SongDetailsDto, Song>().ReverseMap();
             CreateMap<SongCreateDto, Song>()
                 .ForMember(dest => dest.AlbumId, opt => opt.MapFrom(src => src.AlbumId));
             CreateMap<Song, SongCreateDto>()

@@ -36,7 +36,7 @@ namespace OpenMusic.API.Controllers
         {
             try
             {
-                var album = await _albumRepo.GetAsync(id);
+                var album = await _albumRepo.GetAlbumDetailsAsync(id);
 
                 if (album == null)
                 {
