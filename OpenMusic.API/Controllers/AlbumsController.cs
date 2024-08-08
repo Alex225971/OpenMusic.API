@@ -32,7 +32,7 @@ namespace OpenMusic.API.Controllers
 
         // GET: api/Albums/5
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetAlbumAsync(int id)
+        public async Task<ActionResult<AlbumDetailsDto>> GetAlbumAsync(int id)
         {
             try
             {
