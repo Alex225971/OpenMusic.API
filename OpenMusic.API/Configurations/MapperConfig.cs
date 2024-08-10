@@ -39,13 +39,25 @@ namespace OpenMusic.API.Configurations
                     }
                 })
                 .ReverseMap();
-            CreateMap<AlbumUpdateDto, Album>().ReverseMap();
+            CreateMap<AlbumUpdateDto, Album>()
+                .ForMember(dest => dest.ArtistId, opt => opt.MapFrom(src => src.ArtistId))
+                .AfterMap((dto, album) =>
+                {
+                    // Set AlbumId for each Song
+                    foreach (var song in album.Songs)
+                    {
+                        song.AlbumId = album.Id;
+                    }
+                })
+                .ReverseMap();
             CreateMap<AlbumInArtistDto, Album>().ReverseMap();
 
             CreateMap<SongInAlbumDto, Song>().ReverseMap();
             CreateMap<SongPlaybackDto, Song>().ReverseMap();
             CreateMap<SongDetailsDto, Song>().ReverseMap();
-            CreateMap<SongUpdateDto, Song>().ReverseMap();
+            CreateMap<SongUpdateDto, Song>()
+                .ForMember(dest => dest.AlbumId, opt => opt.MapFrom(src => src.AlbumId))
+                .ReverseMap();
 
             CreateMap<SongDetailsDto, Song>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

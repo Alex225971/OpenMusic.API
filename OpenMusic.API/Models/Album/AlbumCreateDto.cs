@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OpenMusic.API.Models.Album
 {
-    public class AlbumCreateDto
+    public class AlbumCreateDto : BaseDto
     {
         [Required]
         [StringLength(50)]

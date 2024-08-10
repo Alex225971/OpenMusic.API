@@ -68,6 +68,7 @@ namespace OpenMusic.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> EditSong(int id, SongUpdateDto songDto)
         {
+            //TODO - make sure a song can be edited with and without album id
             var songWithId = await _songRepo.GetSongForUpdateAsync(id);
 
             if (id != songWithId.Id)
@@ -80,6 +81,14 @@ namespace OpenMusic.API.Controllers
             {
                 return NotFound();
             }
+            if(song.AlbumId != null)
+            {
+                song.AlbumId = songDto.AlbumId;
+            }
+            if (song.ArtistId != null)
+            {
+                song.ArtistId = songDto.ArtistId;
+            }
 
             _mapper.Map(songDto, song);
 
@@ -87,7 +96,7 @@ namespace OpenMusic.API.Controllers
             {
                 await _songRepo.UpdateAsync(song);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
                 if (!await SongExistsAsync(id))
                 {

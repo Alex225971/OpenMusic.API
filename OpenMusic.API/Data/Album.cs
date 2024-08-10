@@ -8,7 +8,7 @@
         public string? Image { get; set; }
         public string? Genre { get; set; }
         public virtual ICollection<Song> Songs { get; set; } = new List<Song>();
-        public int ArtistId { get; set; }
+        public int? ArtistId { get; set; }
         public virtual Artist? Artist { get; set; }
     }
 }

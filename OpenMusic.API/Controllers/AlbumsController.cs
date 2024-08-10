@@ -65,11 +65,13 @@ namespace OpenMusic.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> EditAlbum(int id, AlbumUpdateDto albumDto)
         {
-            if (id != albumDto.Id)
+            //TODO - make sure an album can be edited without affecting songs, and songs can be edited throguh album
+            var album = await _albumRepo.GetAsync(id);
+
+            if (id != album.Id)
             {
                 return BadRequest();
             }
-            var album = await _albumRepo.GetAsync(id);
 
             if (album == null)
             {

@@ -24,6 +24,7 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(a => a.Artist)
             .WithMany(b => b.Albums)
             .HasForeignKey(a => a.ArtistId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Song>()

@@ -243,8 +243,8 @@ namespace OpenMusic.API.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "0017d7fe-f844-47fa-96b1-f6f3f280db0f", 0, "a5811109-b0b0-4cb6-8d3d-c618c9a214c8", "user@test.com", false, "System", "User", false, null, "USER@TEST.COM", "USER@TEST.COM", "AQAAAAIAAYagAAAAEHJM1r4jHdNpjOpXdpeRG80aqIqey9l+EqHqrlzX7jeO0xt96nHSD3p04FWHcMHQDA==", null, false, "0aebcece-f8d0-45eb-a6fb-41f8733088e5", false, "user@test.com" },
-                    { "9f86d912-6254-44e6-aa64-d4da31c8a999", 0, "cfbda802-b8d6-409e-856a-21020de01ab1", "admin@test.com", false, "System", "Admin", false, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAEDLAPyMYs+tTWTujCTYGOFnfYL3gXVgPMtRPhvIBNNE5d4jwxBzrVVQgUwhPH9iyeA==", null, false, "7881cb63-420f-4a57-b4d0-727982b463a9", false, "admin@test.com" }
+                    { "0017d7fe-f844-47fa-96b1-f6f3f280db0f", 0, "495c3340-1474-4e8e-9f15-87d16ebea91e", "user@test.com", false, "System", "User", false, null, "USER@TEST.COM", "USER@TEST.COM", "AQAAAAIAAYagAAAAEBl/lW/HLE0u8OsGumsIAXZVG/+5FjXfD7RI054QO335y4imXt6M1XBpltWReSDPlA==", null, false, "2f4e8edb-f4bf-4b06-941b-26c92e045a81", false, "user@test.com" },
+                    { "9f86d912-6254-44e6-aa64-d4da31c8a999", 0, "9d133d8e-cc89-46b8-9c8c-a0aaa94e74e5", "admin@test.com", false, "System", "Admin", false, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAEE0QUhzE7HOT6SF3WdLAJxwRhJuujO0GaTexWQB5N/c0D4lAxHqxpUm1MI54j5cMRQ==", null, false, "4d3b93d4-f509-478d-ab51-a586c16c57bc", false, "admin@test.com" }
                 });
 
             migrationBuilder.InsertData(
