@@ -55,10 +55,6 @@ namespace OpenMusic.API.Controllers
         public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync(AlbumCreateDto albumDto)
         {
             var album = _mapper.Map<Album>(albumDto);
-            if (string.IsNullOrEmpty(albumDto.Image) == false)
-            {
-                album.Image = "";
-            }
 
             await _albumRepo.AddAsync(album);
 

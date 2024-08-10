@@ -4,7 +4,7 @@ using System;
 
 namespace OpenMusic.API.Helpers
 {
-    public class DateTimeConverter : ITypeConverter<string, DateOnly>
+    public class DateOnlyToStringConverter : ITypeConverter<string, DateOnly>
     {
 
         public DateOnly Convert(string source, DateOnly destination, ResolutionContext context)

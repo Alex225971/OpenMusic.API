@@ -68,7 +68,9 @@ namespace OpenMusic.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> EditSong(int id, SongUpdateDto songDto)
         {
-            if (id != songDto.Id)
+            var songWithId = await _songRepo.GetSongForUpdateAsync(id);
+
+            if (id != songWithId.Id)
             {
                 return BadRequest();
             }

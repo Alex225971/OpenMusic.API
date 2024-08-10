@@ -21,7 +21,7 @@ namespace OpenMusic.API.Repositories
         public async Task<SongDetailsDto> GetSongDetailsAsync(int id)
         {
             return await _dbContext.Songs
-                .ProjectTo<SongDetailsDto>(_mapper.ConfigurationProvider).FirstAsync(s => s.Id == id); ;
+                .ProjectTo<SongDetailsDto>(_mapper.ConfigurationProvider).FirstAsync(s => s.Id == id);
         }
 
         public async Task<SongPlaybackDto> GetForPlaybackAsync(int id)
@@ -29,7 +29,13 @@ namespace OpenMusic.API.Repositories
             return await _dbContext.Songs
                 .Include(s => s.Artist)
                 .Include(s => s.Album)
-                .ProjectTo<SongPlaybackDto>(_mapper.ConfigurationProvider).FirstAsync();
+                .ProjectTo<SongPlaybackDto>(_mapper.ConfigurationProvider).FirstAsync(s => s.Id == id);
+        }
+
+        public async Task<SongDetailsDto> GetSongForUpdateAsync(int id)
+        {
+            return await _dbContext.Songs
+                .ProjectTo<SongDetailsDto>(_mapper.ConfigurationProvider).FirstAsync(s => s.Id == id);
         }
     }
 }

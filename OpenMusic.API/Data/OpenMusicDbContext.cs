@@ -20,6 +20,25 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Album>()
+            .HasOne(a => a.Artist)
+            .WithMany(b => b.Albums)
+            .HasForeignKey(a => a.ArtistId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Song>()
+            .HasOne(s => s.Album)
+            .WithMany(a => a.Songs)
+            .HasForeignKey(s => s.AlbumId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Song>()
+            .HasOne(s => s.Artist)
+            .WithMany(a => a.Songs)
+            .HasForeignKey(s => s.ArtistId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
+
         modelBuilder.Entity<IdentityRole>().HasData(
             new IdentityRole
             {

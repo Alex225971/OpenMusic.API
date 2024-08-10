@@ -33,7 +33,7 @@ namespace OpenMusic.API.Controllers
 
         // GET: api/Artists/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ArtistReadOnlyDto>> GetArtistAsync(int id)
+        public async Task<ActionResult<ArtistDetailsDto>> GetArtistAsync(int id)
         {
             try
             {
@@ -58,6 +58,7 @@ namespace OpenMusic.API.Controllers
         {
             try
             {
+                //TODO - Figure out if it is viable for a front end to insert an artist with albums and songs if the songId needs to be supplied and not guessed from my existing records
                 var artist = _mapper.Map<Artist>(artistDto);
                 await _artistRepo.AddAsync(artist);
 

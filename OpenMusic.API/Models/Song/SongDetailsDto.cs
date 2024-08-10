@@ -5,8 +5,8 @@ namespace OpenMusic.API.Models.Song
     public class SongDetailsDto : BaseDto
     {
         [Required]
-        public string Title { get; set; }
-        public DateOnly ReleaseDate { get; set; }
+        public string? Title { get; set; }
+        public string? ReleaseDate { get; set; }
         public int TotalListeners { get; set; }
         public string SongUrl { get; set; }
         public int? ArtistId { get; set; }
