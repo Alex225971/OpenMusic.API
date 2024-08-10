@@ -56,6 +56,17 @@ namespace OpenMusic.API.Controllers
         {
             var album = _mapper.Map<Album>(albumDto);
 
+
+            //Need to make sure arist IDs stay null for child objects when mappings are done to avoid foreign key constraints 
+            if (album.ArtistId == null)
+            {
+                foreach (var song in album.Songs)
+                {
+                    song.ArtistId = null;
+                }
+            }
+
+
             await _albumRepo.AddAsync(album);
 
             return CreatedAtAction("CreateSAlbumAsync", new { id = album.Id }, album);

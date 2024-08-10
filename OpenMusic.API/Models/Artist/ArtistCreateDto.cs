@@ -10,6 +10,5 @@ namespace OpenMusic.API.Models.Artist
         public string? Bio { get; set; }
         public DateTime? Started { get; set; }
         public DateTime? Ended { get; set; }
-        public List<AlbumCreateDto>? Albums { get; set; }
     }
 }

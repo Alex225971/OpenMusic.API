@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Genre\" />
     <Folder Include="Models\Playlist\" />
   </ItemGroup>
 

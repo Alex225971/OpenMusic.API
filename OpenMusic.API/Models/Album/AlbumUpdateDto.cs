@@ -11,6 +11,5 @@ namespace OpenMusic.API.Models.Album
         public string? Image { get; set; }
         public string? Genre { get; set; }
         public int? ArtistId { get; set; }
-        public List<SongCreateDto>? Songs { get; set; }
     }
 }

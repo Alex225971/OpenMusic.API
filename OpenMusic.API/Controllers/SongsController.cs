@@ -81,7 +81,10 @@ namespace OpenMusic.API.Controllers
             {
                 return NotFound();
             }
-            if(song.AlbumId != null)
+
+            //Because a song can have no related album(single) and no related artist(unkown artist)
+            //We want to check for "null" values before inserting and set them to null so they wont throw a foreign key conflict
+            if (song.AlbumId != null)
             {
                 song.AlbumId = songDto.AlbumId;
             }
