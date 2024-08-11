@@ -1,7 +1,7 @@
-﻿namespace OpenMusic.API.Models.Artist
+﻿namespace OpenMusic.API.Models.Genre
 {
-    public class GenretReadOnlyDto : BaseDto
+    public class GenreReadOnlyDto : BaseDto
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

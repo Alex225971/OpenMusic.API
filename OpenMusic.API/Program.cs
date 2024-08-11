@@ -19,6 +19,7 @@ builder.Services.AddIdentityCore<ApplicationUser>()
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ISongRepository, SongRepository>();
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();

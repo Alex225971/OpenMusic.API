@@ -1,4 +1,5 @@
-﻿using OpenMusic.API.Models.Song;
+﻿using OpenMusic.API.Models.Genre;
+using OpenMusic.API.Models.Song;
 using System.ComponentModel.DataAnnotations;
 
 namespace OpenMusic.API.Models.Album
@@ -10,8 +11,8 @@ namespace OpenMusic.API.Models.Album
         public string Title { get; set; }
         public int Year { get; set; }
         public string? Image { get; set; }
-        public string? Genre { get; set; }
         public int? ArtistId { get; set; }
         public List<SongCreateDto>? Songs { get; set; }
+        public List<GenreReadOnlyDto>? Genres { get; set; }
     }
 }

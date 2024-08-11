@@ -38,13 +38,13 @@ namespace OpenMusic.API.Controllers
         {
             try
             {
-                var artist = await _songRepo.GetForPlaybackAsync(id);
+                var song = await _songRepo.GetForPlaybackAsync(id);
 
-                if (artist == null)
+                if (song == null)
                 {
                     return NotFound();
                 }
-                return Ok(artist);
+                return Ok(song);
             }
             catch (Exception ex)
             {
@@ -58,8 +58,16 @@ namespace OpenMusic.API.Controllers
         public async Task<ActionResult<SongCreateDto>> CreateSongAsync(SongCreateDto songDto)
         {
            var song = _mapper.Map<Song>(songDto);
-           //song.ReleaseDate = DateOnly.Parse(songDto.ReleaseDate);
-           await _songRepo.AddAsync(song);
+            //song.ReleaseDate = DateOnly.Parse(songDto.ReleaseDate);
+            if (songDto.Genres != null) 
+            { 
+                for (int i = 0; i < song.SongGenres.Count(); i++)
+                {
+                    song.SongGenres.ElementAt(i).GenreId = songDto.Genres.ElementAt(i).Id;
+                }
+            }
+            
+            await _songRepo.AddAsync(song);
 
            return CreatedAtAction("CreateSongAsync", new { id = song.Id }, song);
         }

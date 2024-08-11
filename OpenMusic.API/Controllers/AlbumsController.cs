@@ -56,6 +56,13 @@ namespace OpenMusic.API.Controllers
         {
             var album = _mapper.Map<Album>(albumDto);
 
+            if (albumDto.Genres != null)
+            {
+                for (int i = 0; i < album.AlbumGenres.Count(); i++)
+                {
+                    album.AlbumGenres.ElementAt(i).GenreId = albumDto.Genres.ElementAt(i).Id;
+                }
+            }
 
             //Need to make sure arist IDs stay null for child objects when mappings are done to avoid foreign key constraints 
             if (album.ArtistId == null)

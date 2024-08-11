@@ -4,6 +4,7 @@ using OpenMusic.API.Data;
 using OpenMusic.API.Helpers;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Artist;
+using OpenMusic.API.Models.Genre;
 using OpenMusic.API.Models.Song;
 using OpenMusic.API.Models.User;
 
@@ -26,9 +27,12 @@ namespace OpenMusic.API.Configurations
             CreateMap<ArtistUpdateDto, Artist>().ReverseMap();
             CreateMap<ArtistDetailsDto, ArtistReadOnlyDto>().ReverseMap();
 
-            CreateMap<AlbumDetailsDto, Album>().ReverseMap();
+            CreateMap<AlbumDetailsDto, Album>()
+                .ForMember(d => d.AlbumGenres, opt => opt.MapFrom(a => a.Genres))
+                .ReverseMap();
             CreateMap<AlbumReadOnlyDto, Album>().ReverseMap();
             CreateMap<AlbumCreateDto, Album>()
+                .ForMember(d => d.AlbumGenres, opt => opt.MapFrom(a => a.Genres))
                 .ForMember(d => d.Songs, opt => opt.MapFrom(s => s.Songs))
                 .AfterMap((dto, album) =>
                 {
@@ -75,9 +79,18 @@ namespace OpenMusic.API.Configurations
                 .ReverseMap();
 
             CreateMap<SongCreateDto, Song>()
+                .ForMember(d => d.SongGenres, opt => opt.MapFrom(s => s.Genres))
                 .ForMember(dest => dest.ArtistId, opt => opt.MapFrom(src => src.ArtistId))
                 .ForMember(dest => dest.AlbumId, opt => opt.MapFrom(src => src.AlbumId))
+                .ForMember(dest => dest.AlbumId, opt => opt.MapFrom(src => src.AlbumId))
                 .ReverseMap();
+
+            CreateMap<GenreReadOnlyDto, Genre>().ReverseMap();
+            CreateMap<SongGenre, Genre>().ReverseMap();
+            CreateMap<AlbumGenre, Genre>().ReverseMap();
+            CreateMap<GenreReadOnlyDto, SongGenre>().ReverseMap();
+            CreateMap<GenreReadOnlyDto, AlbumGenre>().ReverseMap();
+
         }
     }
 }

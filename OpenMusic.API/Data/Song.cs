@@ -11,6 +11,7 @@
         public virtual Album? Album { get; set; }
         public DateOnly? ReleaseDate { get; set; }
         public int TotalListeners { get; set; }
+        public virtual ICollection<SongGenre> SongGenres { get; set; } = new List<SongGenre>();
 
     }
 }

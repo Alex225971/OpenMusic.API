@@ -12,8 +12,8 @@ using OpenMusic.API.Data;
 namespace OpenMusic.API.Migrations
 {
     [DbContext(typeof(OpenMusicDbContext))]
-    [Migration("20240810091831_AnotherCreateAndSeed")]
-    partial class AnotherCreateAndSeed
+    [Migration("20240811140928_AddingSongAndAlbumGenresWithoutFK")]
+    partial class AddingSongAndAlbumGenresWithoutFK
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,11 +192,11 @@ namespace OpenMusic.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ArtistId")
+                    b.Property<int?>("ArtistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("GenreId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -212,7 +212,24 @@ namespace OpenMusic.API.Migrations
 
                     b.HasIndex("ArtistId");
 
+                    b.HasIndex("GenreId");
+
                     b.ToTable("Albums");
+                });
+
+            modelBuilder.Entity("OpenMusic.API.Data.AlbumGenre", b =>
+                {
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AlbumId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("AlbumGenres");
                 });
 
             modelBuilder.Entity("OpenMusic.API.Data.ApplicationUser", b =>
@@ -292,7 +309,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "9f86d912-6254-44e6-aa64-d4da31c8a999",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9d133d8e-cc89-46b8-9c8c-a0aaa94e74e5",
+                            ConcurrencyStamp = "9df83e71-cf4d-4f01-be7c-cc5d47ca8b4b",
                             Email = "admin@test.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -300,9 +317,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@TEST.COM",
                             NormalizedUserName = "ADMIN@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE0QUhzE7HOT6SF3WdLAJxwRhJuujO0GaTexWQB5N/c0D4lAxHqxpUm1MI54j5cMRQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMr7I49pAWz7GIqeWG2yHz6UfEj5hsvrFWrZq5XCSxqa6WAGJygbsn3r8EAgsd5aKg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4d3b93d4-f509-478d-ab51-a586c16c57bc",
+                            SecurityStamp = "62174d22-0190-4795-9db1-f80f1ca787f7",
                             TwoFactorEnabled = false,
                             UserName = "admin@test.com"
                         },
@@ -310,7 +327,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "0017d7fe-f844-47fa-96b1-f6f3f280db0f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "495c3340-1474-4e8e-9f15-87d16ebea91e",
+                            ConcurrencyStamp = "6c72f16f-4ca9-46e9-80ad-d3318298ad93",
                             Email = "user@test.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -318,9 +335,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@TEST.COM",
                             NormalizedUserName = "USER@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBl/lW/HLE0u8OsGumsIAXZVG/+5FjXfD7RI054QO335y4imXt6M1XBpltWReSDPlA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEChxTBf0G03fk3Ea0FweStNZ8+ViHqsb5aUbwKQD2v43784YR3LcBI6cka1gqCa7/Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2f4e8edb-f4bf-4b06-941b-26c92e045a81",
+                            SecurityStamp = "de3923c3-68f5-4b02-a640-5c38ca6f65e5",
                             TwoFactorEnabled = false,
                             UserName = "user@test.com"
                         });
@@ -355,6 +372,23 @@ namespace OpenMusic.API.Migrations
                     b.ToTable("Artists");
                 });
 
+            modelBuilder.Entity("OpenMusic.API.Data.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("OpenMusic.API.Data.Song", b =>
                 {
                     b.Property<int>("Id")
@@ -367,6 +401,9 @@ namespace OpenMusic.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly?>("ReleaseDate")
@@ -389,7 +426,24 @@ namespace OpenMusic.API.Migrations
 
                     b.HasIndex("ArtistId");
 
+                    b.HasIndex("GenreId");
+
                     b.ToTable("Songs");
+                });
+
+            modelBuilder.Entity("OpenMusic.API.Data.SongGenre", b =>
+                {
+                    b.Property<int>("SongId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SongId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("SongGenres");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -450,7 +504,30 @@ namespace OpenMusic.API.Migrations
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("OpenMusic.API.Data.Genre", null)
+                        .WithMany("Albums")
+                        .HasForeignKey("GenreId");
+
                     b.Navigation("Artist");
+                });
+
+            modelBuilder.Entity("OpenMusic.API.Data.AlbumGenre", b =>
+                {
+                    b.HasOne("OpenMusic.API.Data.Album", "Album")
+                        .WithMany("AlbumGenres")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OpenMusic.API.Data.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("OpenMusic.API.Data.Song", b =>
@@ -465,13 +542,38 @@ namespace OpenMusic.API.Migrations
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("OpenMusic.API.Data.Genre", null)
+                        .WithMany("Songs")
+                        .HasForeignKey("GenreId");
+
                     b.Navigation("Album");
 
                     b.Navigation("Artist");
                 });
 
+            modelBuilder.Entity("OpenMusic.API.Data.SongGenre", b =>
+                {
+                    b.HasOne("OpenMusic.API.Data.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OpenMusic.API.Data.Song", "Song")
+                        .WithMany("SongGenres")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("Song");
+                });
+
             modelBuilder.Entity("OpenMusic.API.Data.Album", b =>
                 {
+                    b.Navigation("AlbumGenres");
+
                     b.Navigation("Songs");
                 });
 
@@ -480,6 +582,18 @@ namespace OpenMusic.API.Migrations
                     b.Navigation("Albums");
 
                     b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("OpenMusic.API.Data.Genre", b =>
+                {
+                    b.Navigation("Albums");
+
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("OpenMusic.API.Data.Song", b =>
+                {
+                    b.Navigation("SongGenres");
                 });
 #pragma warning restore 612, 618
         }

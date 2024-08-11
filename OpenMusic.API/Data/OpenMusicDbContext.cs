@@ -15,6 +15,9 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
     public virtual DbSet<Artist> Artists { get; set; }
     public virtual DbSet<Album> Albums { get; set; }
     public virtual DbSet<Song> Songs { get; set; }
+    public DbSet<Genre> Genres { get; set; }
+    public DbSet<AlbumGenre> AlbumGenres { get; set; }
+    public DbSet<SongGenre> SongGenres { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,6 +29,11 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(a => a.ArtistId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Album>()
+            .HasMany(a => a.AlbumGenres)
+            .WithOne(ag => ag.Album);
+        //    .HasForeignKey(ag => ag.GenreId);
 
         modelBuilder.Entity<Song>()
             .HasOne(s => s.Album)
@@ -39,6 +47,28 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(s => s.ArtistId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Song>()
+            .HasMany(s => s.SongGenres)
+            .WithOne(sg => sg.Song);
+        //    .HasForeignKey(ag => ag.GenreId);
+
+
+        modelBuilder.Entity<AlbumGenre>()
+            .HasOne(ag => ag.Album)
+            .WithMany(a => a.AlbumGenres)
+            .HasForeignKey(ag => ag.AlbumId);
+
+        modelBuilder.Entity<SongGenre>()
+           .HasKey(sg => new { sg.SongId, sg.GenreId });
+
+        modelBuilder.Entity<AlbumGenre>()
+           .HasKey(sg => new { sg.AlbumId, sg.GenreId });
+
+        modelBuilder.Entity<SongGenre>()
+            .HasOne(sg => sg.Song)
+            .WithMany(s => s.SongGenres)
+            .HasForeignKey(sg => sg.SongId);
 
         modelBuilder.Entity<IdentityRole>().HasData(
             new IdentityRole
