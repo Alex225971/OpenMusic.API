@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Repositories;
+using OpenMusic.API.Services;
 
 namespace OpenMusic.API.Controllers
 {
@@ -14,12 +15,14 @@ namespace OpenMusic.API.Controllers
         private readonly IAlbumRepository _albumRepo;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IPhotoService _photoService;
 
-        public AlbumsController(IAlbumRepository albumRepo, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+        public AlbumsController(IAlbumRepository albumRepo, IMapper mapper, IWebHostEnvironment webHostEnvironment, IPhotoService photoService)
         {
             _albumRepo = albumRepo;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
+            _photoService = photoService;
         }
 
         // GET: api/Albums
@@ -51,10 +54,20 @@ namespace OpenMusic.API.Controllers
         }
 
         // POST: api/Albums
-        [HttpPost("CreateAlbumAsync")]
-        public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync(AlbumCreateDto albumDto)
+        [HttpPost]
+        public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync(AlbumCreateDto albumDto, IFormFile? image)
         {
             var album = _mapper.Map<Album>(albumDto);
+
+            //Adding the image to cloudinary and setting image url
+            if (image != null)
+            {
+                var result = await _photoService.AddPhotoAsync(image);
+                if (result.Error != null) return BadRequest(result.Error.Message);
+
+                album.Image = result.SecureUrl.AbsoluteUri;
+            }
+           
 
             if (albumDto.Genres != null)
             {
@@ -76,7 +89,7 @@ namespace OpenMusic.API.Controllers
 
             await _albumRepo.AddAsync(album);
 
-            return CreatedAtAction("CreateSAlbumAsync", new { id = album.Id }, album);
+            return CreatedAtAction("CreateAlbumAsync", new { id = album.Id }, album);
         }
 
         // PUT: api/Albums/5

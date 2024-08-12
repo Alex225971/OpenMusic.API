@@ -17,6 +17,8 @@ builder.Services.AddIdentityCore<ApplicationUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<OpenMusicDbContext>();
 
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
 builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
