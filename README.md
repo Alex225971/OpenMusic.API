@@ -11,7 +11,7 @@ Intended to be used by my future front-end Angular, Vue, React and Blazor projec
 - [x] Store uploaded songs on cloud service (possibly locally during development)
 - [x] Playback of audio files
 
-##Running this project
+## Running this project
 This project has no front end yet, I will be making these in separate projects in future. 
 To get the API running on your machine you will need a Cloudinary account.
 - Open the project in Visual Studio
