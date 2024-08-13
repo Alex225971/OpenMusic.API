@@ -55,7 +55,7 @@ namespace OpenMusic.API.Controllers
 
         // POST: api/Albums
         [HttpPost]
-        public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync(AlbumCreateDto albumDto, IFormFile? image)
+        public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync([FromForm] AlbumCreateDto albumDto, IFormFile image)
         {
             var album = _mapper.Map<Album>(albumDto);
 

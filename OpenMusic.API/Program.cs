@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using OpenMusic.API.Configurations;
 using OpenMusic.API.Data;
 using OpenMusic.API.Repositories;
+using OpenMusic.API.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ISongRepository, SongRepository>();
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
