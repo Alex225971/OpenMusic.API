@@ -8,8 +8,9 @@ namespace OpenMusic.API.Models.Song
 {
     public class SongCreateDto
     {
+        [Required]
         public required string Title { get; set; }
-        public required string SongUrl { get; set; }
+        public string SongUrl { get; set; }
         [JsonConverter(typeof(DateOnlyConverter))]
         public string? ReleaseDate { get; set; }
         public int? AlbumId { get; set; }

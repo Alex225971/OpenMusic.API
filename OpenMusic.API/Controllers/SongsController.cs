@@ -8,8 +8,10 @@ using OpenMusic.API.Data;
 using OpenMusic.API.Models.Artist;
 using OpenMusic.API.Models.Song;
 using OpenMusic.API.Repositories;
+using OpenMusic.API.Services;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace OpenMusic.API.Controllers
 {
@@ -17,11 +19,13 @@ namespace OpenMusic.API.Controllers
     {
         private readonly ISongRepository _songRepo;
         private readonly IMapper _mapper;
+        private readonly ISongService _songService;
 
-        public SongsController(ISongRepository songRepo, IMapper mapper)
+        public SongsController(ISongRepository songRepo, IMapper mapper, ISongService songService)
         {
             _songRepo = songRepo;
             _mapper = mapper;
+            _songService = songService;
         }
 
         // GET: api/Songs
@@ -55,10 +59,18 @@ namespace OpenMusic.API.Controllers
         // POST: api/Songs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("CreateSongAsync")]
-        public async Task<ActionResult<SongCreateDto>> CreateSongAsync(SongCreateDto songDto)
+        public async Task<ActionResult<SongCreateDto>> CreateSongAsync([FromForm] SongCreateDto songDto, IFormFile songFile)
         {
            var song = _mapper.Map<Song>(songDto);
             //song.ReleaseDate = DateOnly.Parse(songDto.ReleaseDate);
+
+            if(songFile != null)
+            {
+                var result = await _songService.AddPhotoAsync(songFile);
+                if (result.Error != null) return BadRequest(result.Error.Message);
+
+                song.SongUrl = result.SecureUrl.AbsoluteUri;
+            }
             if (songDto.Genres != null) 
             { 
                 for (int i = 0; i < song.SongGenres.Count(); i++)
