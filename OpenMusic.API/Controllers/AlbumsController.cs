@@ -140,6 +140,11 @@ namespace OpenMusic.API.Controllers
                 return NotFound();
             }
 
+            if (album.Image == null) return BadRequest("Could not find a photo associated with this record, file not deleted");
+
+            var result = await _photoService.DeletePhotoAsync(album.ImagePublicId);
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
             await _albumRepo.DeleteAsync(id);
 
             return NoContent();

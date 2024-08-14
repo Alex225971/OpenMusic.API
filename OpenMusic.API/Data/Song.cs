@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public required string Title { get; set; }
         public required string SongUrl { get; set; }
+        public string SongPublicId { get; set; }
         public int? ArtistId { get; set; }
         public virtual Artist? Artist { get; set; }
         public int? AlbumId { get; set; }

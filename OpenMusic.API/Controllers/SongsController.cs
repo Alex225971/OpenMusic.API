@@ -66,10 +66,11 @@ namespace OpenMusic.API.Controllers
 
             if(songFile != null)
             {
-                var result = await _songService.AddPhotoAsync(songFile);
+                var result = await _songService.AddSongAsync(songFile);
                 if (result.Error != null) return BadRequest(result.Error.Message);
 
                 song.SongUrl = result.SecureUrl.AbsoluteUri;
+                song.SongPublicId = result.PublicId;
             }
             if (songDto.Genres != null) 
             { 
@@ -139,10 +140,16 @@ namespace OpenMusic.API.Controllers
         public async Task<ActionResult> DeleteSong(int id)
         {
             var song = await _songRepo.GetAsync(id);
+            
             if (song == null)
             {
                 return NotFound();
             }
+
+            if (song.SongUrl == null) return BadRequest("Could not find a song file associated with this record, file not deleted");
+
+            var result = await _songService.DeleteSongAsync(song.SongPublicId);
+            if (result.Error != null) return BadRequest(result.Error.Message);
 
             await _songRepo.DeleteAsync(id);
 

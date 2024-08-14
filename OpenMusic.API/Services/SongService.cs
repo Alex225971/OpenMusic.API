@@ -14,7 +14,7 @@ namespace OpenMusic.API.Services
             var acc = new Account(config.Value.CloudName, config.Value.ApiKey, config.Value.ApiSecret);
             _cloudinary = new Cloudinary(acc);
         }
-        public async Task<RawUploadResult> AddPhotoAsync(IFormFile file)
+        public async Task<RawUploadResult> AddSongAsync(IFormFile file)
         {
             var uploadResult = new RawUploadResult();
             if (file.Length > 0)
@@ -32,7 +32,7 @@ namespace OpenMusic.API.Services
             return uploadResult;
         }
 
-        public async Task<DeletionResult> DeletePhotoAsync(string publicId)
+        public async Task<DeletionResult> DeleteSongAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
             return await _cloudinary.DestroyAsync(deleteParams);
