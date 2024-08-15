@@ -66,6 +66,7 @@ namespace OpenMusic.API.Controllers
                 if (result.Error != null) return BadRequest(result.Error.Message);
 
                 album.Image = result.SecureUrl.AbsoluteUri;
+                album.ImagePublicId = result.PublicId;
             }
            
 
