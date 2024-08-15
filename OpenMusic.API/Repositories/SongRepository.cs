@@ -38,5 +38,14 @@ namespace OpenMusic.API.Repositories
             return await _dbContext.Songs
                 .ProjectTo<SongDetailsDto>(_mapper.ConfigurationProvider).FirstAsync(s => s.Id == id);
         }
+
+        public async Task<List<SongPlaybackDto>> SearchForSongAsync(string queryString)
+        {
+            return await _dbContext.Songs
+                .Include(s => s.Artist)
+                .Include(s => s.Album)
+                .Where(s => s.Title.Contains(queryString))
+                .ProjectTo<SongPlaybackDto>(_mapper.ConfigurationProvider).ToListAsync();       
+        }
     }
 }

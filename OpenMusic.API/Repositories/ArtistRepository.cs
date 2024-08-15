@@ -34,5 +34,10 @@ namespace OpenMusic.API.Repositories
                     .FirstAsync(a => a.Id == id);
             return _mapper.Map<ArtistReadOnlyDto>(artist);
         }
+
+        public Task<ArtistDetailsDto> SearchForArtistAsync(string queryString)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

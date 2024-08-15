@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OpenMusic.API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddingSongAndAlbumGenresWithoutFK : Migration
+    public partial class RecreateAndReseed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -199,6 +199,7 @@ namespace OpenMusic.API.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePublicId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ArtistId = table.Column<int>(type: "int", nullable: true),
                     GenreId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -250,6 +251,7 @@ namespace OpenMusic.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SongUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SongPublicId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ArtistId = table.Column<int>(type: "int", nullable: true),
                     AlbumId = table.Column<int>(type: "int", nullable: true),
                     ReleaseDate = table.Column<DateOnly>(type: "date", nullable: true),
@@ -315,8 +317,8 @@ namespace OpenMusic.API.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "0017d7fe-f844-47fa-96b1-f6f3f280db0f", 0, "6c72f16f-4ca9-46e9-80ad-d3318298ad93", "user@test.com", false, "System", "User", false, null, "USER@TEST.COM", "USER@TEST.COM", "AQAAAAIAAYagAAAAEChxTBf0G03fk3Ea0FweStNZ8+ViHqsb5aUbwKQD2v43784YR3LcBI6cka1gqCa7/Q==", null, false, "de3923c3-68f5-4b02-a640-5c38ca6f65e5", false, "user@test.com" },
-                    { "9f86d912-6254-44e6-aa64-d4da31c8a999", 0, "9df83e71-cf4d-4f01-be7c-cc5d47ca8b4b", "admin@test.com", false, "System", "Admin", false, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAEMr7I49pAWz7GIqeWG2yHz6UfEj5hsvrFWrZq5XCSxqa6WAGJygbsn3r8EAgsd5aKg==", null, false, "62174d22-0190-4795-9db1-f80f1ca787f7", false, "admin@test.com" }
+                    { "0017d7fe-f844-47fa-96b1-f6f3f280db0f", 0, "ab4bfab1-c43a-458d-921a-82e6ceb252ab", "user@test.com", false, "System", "User", false, null, "USER@TEST.COM", "USER@TEST.COM", "AQAAAAIAAYagAAAAEOmjmtKLeh42gGpBphTCG6SV9j2d/5PJQM5Jb3YL9j8vBthDjF4t7f5ipVYMDFi0YA==", null, false, "085910f7-48ec-4c02-866d-12cd5c80a95b", false, "user@test.com" },
+                    { "9f86d912-6254-44e6-aa64-d4da31c8a999", 0, "4450310b-12a8-4663-9b81-7da217494e2a", "admin@test.com", false, "System", "Admin", false, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAEDOBZjP+pByDYlRu1VXkAApgJZTM2mFInWPBBST9ytndFxkgfdBjDzD0Kf9Q2VQAig==", null, false, "602e97a8-0a94-4f8c-9b35-d96bd8d9cb66", false, "admin@test.com" }
                 });
 
             migrationBuilder.InsertData(
