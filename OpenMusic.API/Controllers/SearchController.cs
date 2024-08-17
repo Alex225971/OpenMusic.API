@@ -9,11 +9,14 @@ namespace OpenMusic.API.Controllers
     public class SearchController : BaseApiController
     {
         private readonly ISongRepository _songRepository;
+        private readonly IAlbumRepository _albumRepository;
         private readonly IArtistRepository _artistRepository;
-        public SearchController(ISongRepository songRepository, IArtistRepository artistRepository)
+
+        public SearchController(ISongRepository songRepository, IArtistRepository artistRepository, IAlbumRepository albumRepository)
         {
             _songRepository = songRepository;
             _artistRepository = artistRepository;
+            _albumRepository = albumRepository;
         }
 
         // GET: api/Search/string
@@ -22,11 +25,16 @@ namespace OpenMusic.API.Controllers
         {
             try
             {
+                //TODO - find a more efficient way to search all of these
                 var songs = await _songRepository.SearchForSongAsync(queryString);
+                var albums = await _albumRepository.SearchForAlbumAsync(queryString);
+                var artists = await _artistRepository.SearchForArtistAsync(queryString);
 
                 var result = new SearchResultsDto
                 {
-                    Songs = songs
+                    Songs = songs,
+                    Albums = albums,
+                    Artists = artists
                 };
 
                 return Ok(result);

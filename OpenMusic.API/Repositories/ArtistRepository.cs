@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Artist;
+using OpenMusic.API.Models.Song;
 
 namespace OpenMusic.API.Repositories
 {
@@ -35,9 +36,11 @@ namespace OpenMusic.API.Repositories
             return _mapper.Map<ArtistReadOnlyDto>(artist);
         }
 
-        public Task<ArtistDetailsDto> SearchForArtistAsync(string queryString)
+        public async Task<List<ArtistReadOnlyDto>> SearchForArtistAsync(string queryString)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Artists
+                .Where(s => s.Name.Contains(queryString))
+                .ProjectTo<ArtistReadOnlyDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }

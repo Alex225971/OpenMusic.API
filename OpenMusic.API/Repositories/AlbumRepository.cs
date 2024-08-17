@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Artist;
+using OpenMusic.API.Models.Song;
 
 namespace OpenMusic.API.Repositories
 {
@@ -35,6 +36,14 @@ namespace OpenMusic.API.Repositories
         public async Task<AlbumDetailsDto> GetDetailsAsync(int id)
         {
             return await _dbContext.Albums.Include(b => b.Artist).ProjectTo<AlbumDetailsDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(b => b.Id == id);
+        }
+
+        public async Task<List<AlbumReadOnlyDto>> SearchForAlbumAsync(string queryString)
+        {
+            return await _dbContext.Albums
+                .Include(s => s.Songs)
+                .Where(s => s.Title.Contains(queryString))
+                .ProjectTo<AlbumReadOnlyDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }
