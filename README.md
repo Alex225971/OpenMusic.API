@@ -6,8 +6,8 @@ Intended to be used by my future front-end Angular, Vue, React and Blazor projec
 ### Project goals
 - [x] Use Microsoft ASP.NET Identity & JWTs
 - [ ] Provide end points for users to like songs and artists
-- [ ] Allow users to make  and follow playlists
-- [ ] Allow admins to add albums/songs
+- [ ] Allow users to make and follow playlists
+- [x] Allow admins to add albums/songs
 - [x] Store uploaded songs on cloud service (possibly locally during development)
 - [x] Playback of audio files
 
