@@ -82,6 +82,12 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
                 Name = "Admin",
                 NormalizedName = "ADMIN",
                 Id = "57f7dbef-2cf8-49c9-956a-3a9e16d6a0a5"
+            },
+            new IdentityRole
+            {
+                Name = "Artist",
+                NormalizedName = "ARTIST",
+                Id = "a82ea6f0-508e-4ac6-a1f7-d28ea57ca7e9"
             }
         );
 
@@ -109,6 +115,17 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
                 FirstName = "System",
                 LastName = "User",
                 PasswordHash = hasher.HashPassword(null, "Jabberwocky1!")
+            },
+            new ApplicationUser
+            {
+                Id = "ec33c752-f80d-4230-beee-2cbaccdb9a5d",
+                Email = "artist@test.com",
+                NormalizedEmail = "ARTIST@TEST.COM",
+                UserName = "artist@test.com",
+                NormalizedUserName = "ARTIST@TEST.COM",
+                FirstName = "Test",
+                LastName = "Artist",
+                PasswordHash = hasher.HashPassword(null, "Jabberwocky1!")
             }
         );
 
@@ -122,6 +139,11 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
             {
                 RoleId = "57f7dbef-2cf8-49c9-956a-3a9e16d6a0a5",
                 UserId = "9f86d912-6254-44e6-aa64-d4da31c8a999"
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "a82ea6f0-508e-4ac6-a1f7-d28ea57ca7e9",
+                UserId = "ec33c752-f80d-4230-beee-2cbaccdb9a5d"
             }
         );
 

@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // GET: api/Albums
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AlbumReadOnlyDto>>> GetAlbumsAsync()
         {
@@ -34,6 +36,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // GET: api/Albums/5
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<AlbumDetailsDto>> GetAlbumAsync(int id)
         {
@@ -54,6 +57,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // POST: api/Albums
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync([FromForm] AlbumCreateDto albumDto, IFormFile image)
         {
@@ -94,6 +98,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // PUT: api/Albums/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> EditAlbum(int id, AlbumUpdateDto albumDto)
         {
@@ -132,6 +137,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // DELETE: api/Albums/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAlbum(int id)
         {

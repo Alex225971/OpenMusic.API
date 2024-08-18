@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // GET: api/Songs
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArtistReadOnlyDto>>> GetSongsAsync()
         {
@@ -37,6 +39,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // GET: api/Songs/5
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<SongPlaybackDto>> GetSongForPlaybackAsync(int id)
         {
@@ -58,6 +61,7 @@ namespace OpenMusic.API.Controllers
 
         // POST: api/Songs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Artist")]
         [HttpPost("CreateSongAsync")]
         public async Task<ActionResult<SongCreateDto>> CreateSongAsync([FromForm] SongCreateDto songDto, IFormFile songFile)
         {
@@ -86,6 +90,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // PUT: api/Songs/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> EditSong(int id, SongUpdateDto songDto)
         {
@@ -136,6 +141,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // DELETE: api/Songs/id
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteSong(int id)
         {

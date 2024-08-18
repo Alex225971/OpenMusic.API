@@ -24,6 +24,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // GET: api/Artists
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArtistReadOnlyDto>>> GetArtistsAsync()
         {
@@ -53,7 +54,8 @@ namespace OpenMusic.API.Controllers
 
         // POST: api/Artists
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("CreateArtistAsync")]
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
         public async Task<ActionResult<ArtistCreateDto>> CreateArtistAsync(ArtistCreateDto artistDto)
         {
             try
@@ -71,6 +73,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // PUT: api/Artists/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> EditArtist(int id, ArtistUpdateDto artistDto)
         {
@@ -107,6 +110,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // DELETE: api/Artists/id
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
