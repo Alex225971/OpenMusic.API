@@ -62,7 +62,7 @@ namespace OpenMusic.API.Controllers
         // POST: api/Songs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Admin,Artist")]
-        [HttpPost("CreateSongAsync")]
+        [HttpPost]
         public async Task<ActionResult<SongCreateDto>> CreateSongAsync([FromForm] SongCreateDto songDto, IFormFile songFile)
         {
            var song = _mapper.Map<Song>(songDto);
@@ -86,7 +86,7 @@ namespace OpenMusic.API.Controllers
             
             await _songRepo.AddAsync(song);
 
-           return CreatedAtAction("CreateSongAsync", new { id = song.Id }, song);
+           return CreatedAtAction("AddSongAsync", new { id = song.Id }, song);
         }
 
         // PUT: api/Songs/5

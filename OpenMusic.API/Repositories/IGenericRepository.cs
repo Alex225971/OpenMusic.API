@@ -1,4 +1,7 @@
-﻿namespace OpenMusic.API.Repositories
+﻿using OpenMusic.API.Configurations;
+using OpenMusic.API.Models.Song;
+
+namespace OpenMusic.API.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {

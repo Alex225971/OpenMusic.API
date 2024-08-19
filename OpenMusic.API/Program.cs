@@ -6,6 +6,7 @@ using OpenMusic.API.Configurations;
 using OpenMusic.API.Data;
 using OpenMusic.API.Repositories;
 using OpenMusic.API.Services;
+using SwaggerThemes;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,6 +71,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
 
 app.UseHttpsRedirection();

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using OpenMusic.API.Configurations;
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Artist;
@@ -38,11 +39,13 @@ namespace OpenMusic.API.Repositories
             return await _dbContext.Albums.Include(b => b.Artist).ProjectTo<AlbumDetailsDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task<List<AlbumReadOnlyDto>> SearchForAlbumAsync(string queryString)
+        public async Task<List<AlbumReadOnlyDto>> SearchForAlbumAsync(QueryParams queryParams)
         {
             return await _dbContext.Albums
                 .Include(s => s.Songs)
-                .Where(s => s.Title.Contains(queryString))
+                .Where(s => s.Title.Contains(queryParams.queryString))
+                .Skip(queryParams.PageSize * (queryParams.PageNumber - 1))
+                .Take(queryParams.PageSize)
                 .ProjectTo<AlbumReadOnlyDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }

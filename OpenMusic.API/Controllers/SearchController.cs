@@ -1,12 +1,15 @@
 ﻿using API.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using OpenMusic.API.Configurations;
 using OpenMusic.API.Models.SearchResults;
 using OpenMusic.API.Models.Song;
 using OpenMusic.API.Repositories;
 
 namespace OpenMusic.API.Controllers
 {
-    public class SearchController : BaseApiController
+    [ApiController]
+    [Route("api")]
+    public class SearchController : ControllerBase
     {
         private readonly ISongRepository _songRepository;
         private readonly IAlbumRepository _albumRepository;
@@ -21,14 +24,14 @@ namespace OpenMusic.API.Controllers
 
         // GET: api/Search/string
         [HttpGet("search")]
-        public async Task<ActionResult<SearchResultsDto>> SearchForSongsAsync(string queryString)
+        public async Task<ActionResult<IEnumerable<SearchResultsDto>>> SearchForSongsAsync([FromQuery] QueryParams queryParams)
         {
             try
             {
                 //TODO - find a more efficient way to search all of these
-                var songs = await _songRepository.SearchForSongAsync(queryString);
-                var albums = await _albumRepository.SearchForAlbumAsync(queryString);
-                var artists = await _artistRepository.SearchForArtistAsync(queryString);
+                var songs = await _songRepository.SearchForSongAsync(queryParams);
+                var albums = await _albumRepository.SearchForAlbumAsync(queryParams);
+                var artists = await _artistRepository.SearchForArtistAsync(queryParams);
 
                 var result = new SearchResultsDto
                 {

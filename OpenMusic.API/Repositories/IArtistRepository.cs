@@ -1,4 +1,5 @@
-﻿using OpenMusic.API.Data;
+﻿using OpenMusic.API.Configurations;
+using OpenMusic.API.Data;
 using OpenMusic.API.Models.Artist;
 using OpenMusic.API.Models.Song;
 
@@ -8,6 +9,6 @@ namespace OpenMusic.API.Repositories
     {
         Task<ArtistDetailsDto> GetArtistDetailsAsync(int id);
         Task<ArtistReadOnlyDto> GetArtistReadOnlyAsync(int id);
-        Task<List<ArtistReadOnlyDto>> SearchForArtistAsync(string queryString);
+        Task<List<ArtistDetailsDto>> SearchForArtistAsync(QueryParams queryParams);
     }
 }

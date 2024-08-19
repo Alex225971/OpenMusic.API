@@ -8,6 +8,6 @@ namespace OpenMusic.API.Models.SearchResults
     {
         public List<SongPlaybackDto> Songs { get; set; }
         public List<AlbumReadOnlyDto> Albums { get; set; }
-        public List<ArtistReadOnlyDto> Artists { get; set; }
+        public List<ArtistDetailsDto> Artists { get; set; }
     }
 }

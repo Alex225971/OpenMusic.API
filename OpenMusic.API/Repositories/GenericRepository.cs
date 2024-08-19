@@ -1,7 +1,10 @@
 ﻿
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using OpenMusic.API.Configurations;
 using OpenMusic.API.Data;
+using OpenMusic.API.Models.Song;
 
 namespace OpenMusic.API.Repositories
 {
