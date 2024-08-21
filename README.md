@@ -13,7 +13,7 @@ Intended to be used by my future front-end Angular, Vue, React and Blazor projec
 
 ## Running this project
 This project has no front end yet, I will be making these in separate projects in future. 
-To get the API running on your machine you will need a Cloudinary account.
+To get the API running on your machine you will need to download the repository, create a cloudinary account and find your Cloud Name, API Key and API Secret.
 - Open the project in Visual Studio
 - Right click the API project and click "manage user secrets"
 - Include the following configurations in your user secrets file
