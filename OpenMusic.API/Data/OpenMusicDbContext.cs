@@ -15,6 +15,7 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
     public virtual DbSet<Artist> Artists { get; set; }
     public virtual DbSet<Album> Albums { get; set; }
     public virtual DbSet<Song> Songs { get; set; }
+    public DbSet<Playlist> Playlists { get; set; }
     public DbSet<Genre> Genres { get; set; }
     public DbSet<AlbumGenre> AlbumGenres { get; set; }
     public DbSet<SongGenre> SongGenres { get; set; }
@@ -29,6 +30,13 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(a => a.ArtistId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Playlist>()
+            .HasOne(a => a.Creator)
+            .WithMany(b => b.Playlists)
+            .HasForeignKey(a => a.CreatorId)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<Album>()
             .HasMany(a => a.AlbumGenres)

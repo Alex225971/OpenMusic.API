@@ -9,5 +9,6 @@ namespace OpenMusic.API.Data
         public required string FirstName { get; set; }
         [Required]
         public required string LastName { get;  set; }
+        public virtual ICollection<Playlist> Playlists { get; set; } = new List<Playlist>();
     }
 }

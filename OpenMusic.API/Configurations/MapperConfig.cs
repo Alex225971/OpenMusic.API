@@ -5,6 +5,7 @@ using OpenMusic.API.Helpers;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Artist;
 using OpenMusic.API.Models.Genre;
+using OpenMusic.API.Models.Playlist;
 using OpenMusic.API.Models.Song;
 using OpenMusic.API.Models.User;
 
@@ -90,6 +91,9 @@ namespace OpenMusic.API.Configurations
             CreateMap<AlbumGenre, Genre>().ReverseMap();
             CreateMap<GenreReadOnlyDto, SongGenre>().ReverseMap();
             CreateMap<GenreReadOnlyDto, AlbumGenre>().ReverseMap();
+
+            CreateMap<Playlist, PlaylistPlaybackDto>().ReverseMap();
+            CreateMap<Playlist, PlaylistCreateDto>().ReverseMap();
 
         }
     }
