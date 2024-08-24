@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using OpenMusic.API.Configurations;
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
+using OpenMusic.API.Models.Artist;
 using OpenMusic.API.Models.Playlist;
 
 namespace OpenMusic.API.Repositories
@@ -33,9 +35,13 @@ namespace OpenMusic.API.Repositories
                 .ToListAsync();
         }
 
-        public Task UpdateAsync(Playlist entity)
+        public async Task<List<PlaylistPlaybackDto>> SearchForPlaylistsAsync(QueryParams queryParams)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Playlists
+                .Where(s => s.Name.Contains(queryParams.queryString))
+                .Skip(queryParams.PageSize * (queryParams.PageNumber - 1))
+                .Take(queryParams.PageSize)
+                .ProjectTo<PlaylistPlaybackDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }

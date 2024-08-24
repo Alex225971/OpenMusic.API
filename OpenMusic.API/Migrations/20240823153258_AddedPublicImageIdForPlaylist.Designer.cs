@@ -12,8 +12,8 @@ using OpenMusic.API.Data;
 namespace OpenMusic.API.Migrations
 {
     [DbContext(typeof(OpenMusicDbContext))]
-    [Migration("20240823095705_CreateAndSeedWithPlaylists")]
-    partial class CreateAndSeedWithPlaylists
+    [Migration("20240823153258_AddedPublicImageIdForPlaylist")]
+    partial class AddedPublicImageIdForPlaylist
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -324,7 +324,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "9f86d912-6254-44e6-aa64-d4da31c8a999",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0731c135-2bc1-4760-8b8f-083d7c676b05",
+                            ConcurrencyStamp = "f731fa9f-cab0-4217-bcaf-6f51a14e09c1",
                             Email = "admin@test.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -332,9 +332,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@TEST.COM",
                             NormalizedUserName = "ADMIN@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEt89Al2sSK3c4vlkTZqu2Aj1ISxVAYTkN12s2rcwRZ2MHit9DDHsehE/g/8+VuL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDesFmGEZe/ZFhnohk9Yvz9M2m9uHUFkmCEaPyO2S9/EfP1Z83IxIp7w1EO87U7RDA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "80348f76-7ee9-4f5a-b4d3-6aa809d290d9",
+                            SecurityStamp = "595d4594-4a7a-415f-b7a4-7cbcd2736f7b",
                             TwoFactorEnabled = false,
                             UserName = "admin@test.com"
                         },
@@ -342,7 +342,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "0017d7fe-f844-47fa-96b1-f6f3f280db0f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8ec0bb20-b2c3-4a21-b550-5125438fe5f3",
+                            ConcurrencyStamp = "296aa5f3-5260-4842-8e47-370351a365d9",
                             Email = "user@test.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -350,9 +350,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@TEST.COM",
                             NormalizedUserName = "USER@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENLF38ca3hDQI7UTa17ih87sU3Bh74UJMy42Y9uNeZt5xEZ7YyiZYzIMK/LTJWUe1g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFiW7UfKM7wFcxNJPxBOukAly/ACiy+FIpLicSRB4ilUBQk7M2S0HOJtxV6YPGiiLQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "331f5f9a-6bd2-4e1f-8c7d-20881ce20653",
+                            SecurityStamp = "a163107a-11e2-48f9-9edf-f7ee293b1eed",
                             TwoFactorEnabled = false,
                             UserName = "user@test.com"
                         },
@@ -360,7 +360,7 @@ namespace OpenMusic.API.Migrations
                         {
                             Id = "ec33c752-f80d-4230-beee-2cbaccdb9a5d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a770da24-6d94-465b-b506-e152e77194b7",
+                            ConcurrencyStamp = "9df417c9-59f2-4b65-a3d6-f2c9a71e15dd",
                             Email = "artist@test.com",
                             EmailConfirmed = false,
                             FirstName = "Test",
@@ -368,9 +368,9 @@ namespace OpenMusic.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARTIST@TEST.COM",
                             NormalizedUserName = "ARTIST@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFwbcydg312PyaqOTVsNWujsyoU8MAbJjeQj5tUN5DrnHuxOal0yRpyz3TaUpnHaJg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIQNG6pb+eH6DdEt0c5OCxjTY0ppUd/fJXcFOqEGHv4YUcVJuEr9kdbJgHFRacdvaA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eb70e4b9-6231-4116-9b74-a20e6ff83df7",
+                            SecurityStamp = "16309384-7ea0-4595-a88f-c5a717b388a3",
                             TwoFactorEnabled = false,
                             UserName = "artist@test.com"
                         });
@@ -440,6 +440,9 @@ namespace OpenMusic.API.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImagePublicId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -451,7 +454,7 @@ namespace OpenMusic.API.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("PlayLists");
+                    b.ToTable("Playlists");
                 });
 
             modelBuilder.Entity("OpenMusic.API.Data.Song", b =>

@@ -10,6 +10,7 @@ namespace OpenMusic.API.Data
         public string? Description { get; set; }
         public DateTime Created { get; set; }
         public string? ImageUrl { get; set; }
+        public string ImagePublicId { get; set; }
         public string CreatorId { get; set; }
         public virtual ApplicationUser? Creator { get; set; }
         public virtual ICollection<Song> Songs { get; set; } = new List<Song>();
