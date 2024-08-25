@@ -6,14 +6,15 @@ Intended to be used by my future front-end Angular, Vue, React and Blazor projec
 ### Project goals
 - [x] Use Microsoft ASP.NET Identity & JWTs
 - [ ] Provide end points for users to like songs and artists
-- [ ] Allow users to make and follow playlists
+- [x] Allow users to make playlists
+- [ ] Allow users to follow playlists
 - [x] Allow admins to add albums/songs
 - [x] Store uploaded songs on cloud service (possibly locally during development)
 - [x] Playback of audio files
 
 ## Running this project
 This project has no front end yet, I will be making these in separate projects in future. 
-To get the API running on your machine you will need to download the repository, create a cloudinary account and find your Cloud Name, API Key and API Secret.
+To get the API running on your machine you will need to download the repository, create a cloudinary account and find your Cloud Name, API Key and API Secret. Then:
 - Open the project in Visual Studio
 - Right click the API project and click "manage user secrets"
 - Include the following configurations in your user secrets file
