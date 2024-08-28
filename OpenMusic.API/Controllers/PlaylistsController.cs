@@ -38,7 +38,24 @@ namespace OpenMusic.API.Controllers
             return Ok(playlist);
         }
 
+        [HttpGet("{id}")]
         [Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult<PlaylistPlaybackDto>> GetPlaylistAsync(int id)
+        {
+            var playlist = await _playlistRepository.GetAsync(id);
+
+            if (playlist == null)
+            {
+                return NotFound();
+            }
+
+            var playlistDetailed = _mapper.Map<PlaylistPlaybackDto>(playlist);
+
+            return playlistDetailed;
+        }
+
+
+        //[Authorize(Roles = "User,Admin")]
         [HttpPost]
         public async Task<ActionResult<PlaylistCreateDto>> CreatePlaylistAsync([FromForm] PlaylistCreateDto playlistDto, IFormFile image)
         {
@@ -67,7 +84,7 @@ namespace OpenMusic.API.Controllers
 
             await _playlistRepository.AddAsync(playlist);
 
-            return CreatedAtAction("CreatePlaylistAsync", new { id = playlist.Id }, playlist);
+            return StatusCode(201, playlist);
         }
 
         [Authorize(Roles = "Admin")]

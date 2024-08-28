@@ -24,6 +24,24 @@ namespace OpenMusic.API.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet]
+        [Route("user")]
+        public async Task<ActionResult<UserDto>> GetUserById(string id)
+        {
+
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id);
+                var userDto = _mapper.Map<UserDto>(user);
+                return Ok(userDto);
+
+            }
+            catch (Exception e)
+            {
+                return Problem($"Something went wrong with registration {nameof(Register)}", statusCode: 500);
+            }
+        }
+
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register(UserDto userDto)
@@ -73,7 +91,8 @@ namespace OpenMusic.API.Controllers
                 {
                     Email = userDto.Email,
                     Token = tokenString,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    FirstName = user.FirstName
                 };
 
                 return response;

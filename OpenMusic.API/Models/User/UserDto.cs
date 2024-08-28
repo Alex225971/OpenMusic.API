@@ -8,7 +8,6 @@ namespace OpenMusic.API.Models.User
         public required string FirstName { get; set; }
         [Required]
         public required string LastName { get; set; }
-        [Required]
-        public required string Role { get; set; }
+        public string? Role { get; set; }
     }
 }
