@@ -43,8 +43,13 @@ namespace OpenMusic.API.Controllers
         public async Task<ActionResult<PlaylistPlaybackDto>> GetPlaylistAsync(int id)
         {
             var playlist = await _playlistRepository.GetAsync(id);
+            var creatorId = User.FindFirstValue("uid");
 
             if (playlist == null)
+            {
+                return NotFound();
+            }
+            if(creatorId != playlist.CreatorId)
             {
                 return NotFound();
             }
