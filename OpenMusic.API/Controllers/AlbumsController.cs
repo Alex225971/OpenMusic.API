@@ -115,7 +115,7 @@ namespace OpenMusic.API.Controllers
 
             await _albumRepo.AddAsync(album);
 
-            return CreatedAtAction("CreateAlbumAsync", new { id = album.Id }, album);
+            return StatusCode(201, album);
         }
 
         // PUT: api/Albums/5
