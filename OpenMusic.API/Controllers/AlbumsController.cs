@@ -37,6 +37,27 @@ namespace OpenMusic.API.Controllers
 
         // GET: api/Albums/5
         [Authorize(Roles = "Admin")]
+        [HttpGet("/api/Albums/Artist/{id}")]
+        public async Task<ActionResult<AlbumDetailsDto>> GetAlbumsFromArtistAsync(int id)
+        {
+            try
+            {
+                var album = await _albumRepo.GetAlbumsFromArtist(id);
+
+                if (album == null)
+                {
+                    return NotFound();
+                }
+                return Ok(album);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        // GET: api/Albums/5
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<AlbumDetailsDto>> GetAlbumAsync(int id)
         {
