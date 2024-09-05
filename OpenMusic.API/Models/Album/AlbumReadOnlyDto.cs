@@ -2,7 +2,7 @@
 
 namespace OpenMusic.API.Models.Album
 {
-    public class AlbumReadOnlyDto
+    public class AlbumReadOnlyDto : BaseDto
     {
         public string Title { get; set; }
         public int Year { get; set; }

@@ -32,6 +32,7 @@ namespace OpenMusic.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<List<PlaylistPlaybackDto>>> GetPlaylistsForUserAsync(string creatorId)
         {
             var playlist = await _playlistRepository.GetUserPlaylistsAsync(creatorId);
