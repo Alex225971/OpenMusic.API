@@ -83,7 +83,6 @@ namespace OpenMusic.API.Configurations
                 .ForMember(d => d.SongGenres, opt => opt.MapFrom(s => s.Genres))
                 .ForMember(dest => dest.ArtistId, opt => opt.MapFrom(src => src.ArtistId))
                 .ForMember(dest => dest.AlbumId, opt => opt.MapFrom(src => src.AlbumId))
-                .ForMember(dest => dest.AlbumId, opt => opt.MapFrom(src => src.AlbumId))
                 .ReverseMap();
 
             CreateMap<GenreReadOnlyDto, Genre>().ReverseMap();
