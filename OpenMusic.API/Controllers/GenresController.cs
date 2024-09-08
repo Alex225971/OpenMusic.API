@@ -39,7 +39,7 @@ namespace OpenMusic.API.Controllers
 
             await _genreRepo.AddAsync(genre);
 
-            return CreatedAtAction("CreateGenreAsync", new { id = genre.Id }, genre);
+            return StatusCode(201, genre);
         }
     }
 }

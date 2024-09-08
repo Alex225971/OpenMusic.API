@@ -64,7 +64,7 @@ namespace OpenMusic.API.Controllers
                 var artist = _mapper.Map<Artist>(artistDto);
                 await _artistRepo.AddAsync(artist);
 
-                return CreatedAtAction("CreateArtistAsync", new { id = artist.Id }, artist);
+                return StatusCode(201, artist);
             }
             catch (Exception e)
             {
