@@ -74,6 +74,10 @@ namespace OpenMusic.API.Configurations
             CreateMap<SongUpdateDto, Song>()
                 .ForMember(dest => dest.AlbumId, opt => opt.MapFrom(src => src.AlbumId))
                 .ReverseMap();
+            CreateMap<SongInAlbumCreateDto, Song>()
+                .ForMember(dest => dest.AlbumId, opt => opt.MapFrom(src => src.AlbumId))
+                .ReverseMap();
+
 
             CreateMap<SongDetailsDto, Song>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

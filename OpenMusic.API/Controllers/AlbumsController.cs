@@ -17,13 +17,15 @@ namespace OpenMusic.API.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IPhotoService _photoService;
+        private readonly ISongService _songService;
 
-        public AlbumsController(IAlbumRepository albumRepo, IMapper mapper, IWebHostEnvironment webHostEnvironment, IPhotoService photoService)
+        public AlbumsController(IAlbumRepository albumRepo, IMapper mapper, IWebHostEnvironment webHostEnvironment, IPhotoService photoService, ISongService songService)
         {
             _albumRepo = albumRepo;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _photoService = photoService;
+            _songService = songService;
         }
 
         // GET: api/Albums
@@ -93,7 +95,23 @@ namespace OpenMusic.API.Controllers
                 album.Image = result.SecureUrl.AbsoluteUri;
                 album.ImagePublicId = result.PublicId;
             }
-           
+
+            if (albumDto.Songs != null) {
+
+                for (int i = 0; i < albumDto.Songs.Count; i++)
+                {
+
+                    if (albumDto.Songs.ElementAt(i).SongFile != null)
+                    {
+                        var result = await _songService.AddSongAsync(albumDto.Songs.ElementAt(i).SongFile);
+                        if (result.Error != null) return BadRequest(result.Error.Message);
+
+                        album.Songs.ElementAt(i).SongUrl = result.SecureUrl.AbsoluteUri;
+                        album.Songs.ElementAt(i).SongPublicId = result.PublicId;
+                    }
+                }
+                //TODO - fix this to stop returning 500s even when it works
+            }
 
             if (albumDto.Genres != null)
             {

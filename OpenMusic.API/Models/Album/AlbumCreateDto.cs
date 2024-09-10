@@ -12,7 +12,7 @@ namespace OpenMusic.API.Models.Album
         public int Year { get; set; }
         public string? Image { get; set; }
         public int? ArtistId { get; set; }
-        public List<SongCreateDto>? Songs { get; set; }
+        public List<SongInAlbumCreateDto>? Songs { get; set; }
         public List<GenreReadOnlyDto>? Genres { get; set; }
     }
 }

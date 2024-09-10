@@ -32,9 +32,11 @@ namespace OpenMusic.API.Controllers
         // GET: api/Songs
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArtistReadOnlyDto>>> GetSongsAsync()
+        public async Task<ActionResult<IEnumerable<SongPlaybackDto>>> GetSongsAsync()
         {
+            //TODO - sort this out, artistName and albumName aren't being set because I'm returning the entity instead of the type. Will need to map entities to The appropriate DTOs
             var songs = await _songRepo.GetAllAsync();
+
             return Ok(songs);
         }
 
@@ -65,7 +67,7 @@ namespace OpenMusic.API.Controllers
         [HttpPost]
         public async Task<ActionResult<SongCreateDto>> CreateSongAsync([FromForm] SongCreateDto songDto, IFormFile songFile)
         {
-           var song = _mapper.Map<Song>(songDto);
+            var song = _mapper.Map<Song>(songDto);
             //song.ReleaseDate = DateOnly.Parse(songDto.ReleaseDate);
 
             if(songFile != null)
