@@ -14,7 +14,7 @@ namespace OpenMusic.API.Models.Song
         public int? ArtistId { get; set; }
         public string? ArtistName { get; set; }
         public int? AlbumId { get; set; }
-        public string? AlbumtName { get; set; }
+        public string? AlbumTitle { get; set; }
         public List<SongGenre>? Genres { get; set; }
 
     }
