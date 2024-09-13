@@ -59,7 +59,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // GET: api/Albums/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User,Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<AlbumDetailsDto>> GetAlbumAsync(int id)
         {
@@ -108,6 +108,7 @@ namespace OpenMusic.API.Controllers
 
                         album.Songs.ElementAt(i).SongUrl = result.SecureUrl.AbsoluteUri;
                         album.Songs.ElementAt(i).SongPublicId = result.PublicId;
+                        album.Songs.ElementAt(i).ArtistId = album.ArtistId;
                     }
                 }
                 //TODO - fix this to stop returning 500s even when it works
