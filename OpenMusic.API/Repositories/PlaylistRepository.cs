@@ -22,7 +22,7 @@ namespace OpenMusic.API.Repositories
 
         public async Task<PlaylistPlaybackDto> GetPlaylistForPlaybackAsync(int id)
         {
-            var playlist = await _dbContext.Playlists.FindAsync(id);
+            var playlist = await _dbContext.Playlists.Where(pl => pl.Id == id).Include(pl => pl.Songs).FirstAsync();
             return _mapper.Map<PlaylistPlaybackDto>(playlist);
         }
 
