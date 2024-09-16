@@ -24,6 +24,7 @@ namespace OpenMusic.API.Repositories
         {
             var artist = await _dbContext.Artists
                     .Include(a => a.Albums)
+                    .ThenInclude(al => al.Songs)
                     .ProjectTo<ArtistDetailsDto>(_mapper.ConfigurationProvider)
                     .FirstAsync(a => a.Id == id);
             return artist;

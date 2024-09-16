@@ -10,6 +10,6 @@ namespace OpenMusic.API.Models.Album
         public int ArtistId { get; set; }
         public string ArtistName { get; set; }
         public string Image { get; set; }
-        public List<SongInAlbumDto>? Songs { get; set; }
+        public List<SongPlaybackDto>? Songs { get; set; }
     }
 }
