@@ -58,5 +58,14 @@ namespace OpenMusic.API.Repositories
                 .Include(s => s.Album)
                 .ProjectTo<SongDetailsDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
+
+        public async Task<List<SongPlaybackDto>> GetSongsFromArtistAsync(int id)
+        {
+            return await _dbContext.Songs
+                .Include(s => s.Artist)
+                .Include(s => s.Album)
+                .Include(s => s.SongGenres)
+                .ProjectTo<SongPlaybackDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
     }
 }

@@ -122,7 +122,7 @@ namespace OpenMusic.API.Controllers
         }
 
         [Authorize(Roles = "User,Admin")]
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePlaylistAsync(int id)
         {
             var playlist = await _dbContext.Playlists.FindAsync(id);

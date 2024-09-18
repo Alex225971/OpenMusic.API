@@ -9,6 +9,7 @@ namespace OpenMusic.API.Repositories
     {
         Task<SongPlaybackDto> GetForPlaybackAsync(int id);
         Task<List<SongPlaybackDto>> SearchForSongAsync(QueryParams queryParams);
+        Task<List<SongPlaybackDto>> GetSongsFromArtistAsync(int id);
         Task<List<SongDetailsDto>> GetAllSongDetailsAsync();
         Task<SongDetailsDto> GetSongDetailsAsync(int id);
         Task<SongDetailsDto> GetSongForUpdateAsync(int id);

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using OpenMusic.API.Data;
+using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Artist;
 using OpenMusic.API.Models.Song;
 using OpenMusic.API.Repositories;
@@ -38,6 +39,27 @@ namespace OpenMusic.API.Controllers
             var songs = await _songRepo.GetAllSongDetailsAsync();
 
             return Ok(songs);
+        }
+
+        // GET: api/Songs/Artist/5
+        [Authorize(Roles = "Admin,User")]
+        [HttpGet("/api/Songs/Artist/{id}")]
+        public async Task<ActionResult<IEnumerable<SongPlaybackDto>>> GetSongsFromArtist(int id)
+        {
+            try
+            {
+                var songs = await _songRepo.GetSongsFromArtistAsync(id);
+
+                if (songs == null)
+                {
+                    return NotFound();
+                }
+                return Ok(songs);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         // GET: api/Songs/5
