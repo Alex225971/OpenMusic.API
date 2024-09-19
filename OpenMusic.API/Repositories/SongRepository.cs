@@ -45,7 +45,7 @@ namespace OpenMusic.API.Repositories
             return await _dbContext.Songs
                 .Include(s => s.Artist)
                 .Include(s => s.Album)
-                .Where(s => s.Title.Contains(queryParams.queryString))
+                .Where(s => s.Title.Contains(queryParams.queryString) || s.Album.Title.Contains(queryParams.queryString) || s.Artist.Name.Contains(queryParams.queryString))
                 .Skip(queryParams.PageSize * (queryParams.PageNumber -1))
                 .Take(queryParams.PageSize)
                 .ProjectTo<SongPlaybackDto>(_mapper.ConfigurationProvider).ToListAsync();

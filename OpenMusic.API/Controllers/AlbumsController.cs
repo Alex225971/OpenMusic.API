@@ -140,7 +140,7 @@ namespace OpenMusic.API.Controllers
         // PUT: api/Albums/5
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<ActionResult> EditAlbum(int id, AlbumUpdateDto albumDto)
+        public async Task<ActionResult> EditAlbum(int id, [FromForm]AlbumUpdateDto albumDto)
         {
             //TODO - make sure an album can be edited without affecting songs, and songs can be edited throguh album
             var album = await _albumRepo.GetAsync(id);
@@ -156,10 +156,11 @@ namespace OpenMusic.API.Controllers
             }
 
             _mapper.Map(albumDto, album);
+            var mappedAlbum = _mapper.Map<Album>(album);
 
             try
             {
-                await _albumRepo.UpdateAsync(album);
+                await _albumRepo.UpdateAsync(mappedAlbum);
             }
             catch (DbUpdateConcurrencyException)
             {

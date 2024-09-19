@@ -48,7 +48,7 @@ namespace OpenMusic.API.Repositories
         {
             return await _dbContext.Albums
                 .Include(s => s.Songs)
-                .Where(s => s.Title.Contains(queryParams.queryString))
+                .Where(a => a.Title.Contains(queryParams.queryString))
                 .Skip(queryParams.PageSize * (queryParams.PageNumber - 1))
                 .Take(queryParams.PageSize)
                 .ProjectTo<AlbumReadOnlyDto>(_mapper.ConfigurationProvider).ToListAsync();
