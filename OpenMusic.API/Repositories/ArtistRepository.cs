@@ -43,7 +43,7 @@ namespace OpenMusic.API.Repositories
         {
             return await _dbContext.Artists
                 .Where(s => s.Name.Contains(queryParams.queryString))
-                .Include(a => a.Albums)
+                .Include(a => a.Albums.Where(al => al.Title == queryParams.queryString))
                 .Include(a => a.Songs)
                 .Skip(queryParams.PageSize * (queryParams.PageNumber - 1))
                 .Take(queryParams.PageSize)

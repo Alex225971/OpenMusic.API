@@ -1,4 +1,5 @@
-﻿using OpenMusic.API.Configurations;
+﻿using Microsoft.AspNetCore.Mvc;
+using OpenMusic.API.Configurations;
 using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Song;
@@ -12,5 +13,6 @@ namespace OpenMusic.API.Repositories
         Task<AlbumDetailsDto> GetAlbumDetailsAsync(int id);
         Task<List<AlbumDetailsDto>> GetAlbumsFromArtist(int id);
         Task<List<AlbumReadOnlyDto>> SearchForAlbumAsync(QueryParams queryParams);
+        Task UpdateAlbumWithSongs(int id, AlbumUpdateDto albumDto);
     }
 }

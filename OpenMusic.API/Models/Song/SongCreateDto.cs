@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace OpenMusic.API.Models.Song
 {
-    public class SongCreateDto
+    public class SongCreateDto : BaseDto
     {
         [Required]
         public required string Title { get; set; }
@@ -17,6 +17,7 @@ namespace OpenMusic.API.Models.Song
         public string? AlbumTitle { get; set; }
         public int? ArtistId { get; set; }
         public string? ArtistName { get; set; }
+        public IFormFile? SongFile { get; set; }
         public List<GenreReadOnlyDto>? Genres { get; set; }
     }
 }

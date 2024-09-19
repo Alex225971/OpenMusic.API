@@ -155,24 +155,32 @@ namespace OpenMusic.API.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(albumDto, album);
-            var mappedAlbum = _mapper.Map<Album>(album);
+            //_mapper.Map(albumDto, album);
+            //var mappedAlbum = _mapper.Map<Album>(album);
 
             try
             {
-                await _albumRepo.UpdateAsync(mappedAlbum);
-            }
-            catch (DbUpdateConcurrencyException)
+                await _albumRepo.UpdateAlbumWithSongs(id, albumDto);
+            } catch (Exception ex)
             {
-                if (!await AlbumExistsAsync(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
+
+            //try
+            //{
+            //    await _albumRepo.UpdateAsync(mappedAlbum);
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!await AlbumExistsAsync(id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
 
             return NoContent();
         }
