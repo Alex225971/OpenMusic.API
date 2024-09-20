@@ -83,6 +83,7 @@ namespace OpenMusic.API.Repositories
                 var updatedSong = albumDto.Songs.FirstOrDefault(s => s.Id == existingSong.Id);
                 if (updatedSong != null)
                 {
+                    existingSong.ArtistId = albumDto.ArtistId;
                     //Update existing song properties
                     existingSong.Title = updatedSong.Title;
                     existingSong.ReleaseDate = DateOnly.Parse(updatedSong.ReleaseDate);
@@ -96,22 +97,25 @@ namespace OpenMusic.API.Repositories
             }
 
             //TODO - run a similar logic to song create as we need a public id and songUrl to be generated before inserting will work
-            foreach (var newSong in albumDto.Songs.Where(s => s.Id == 0))
+            if (albumDto.Songs != null)
             {
-                var mappedNewSong = _mapper.Map<Song>(newSong);
-                mappedNewSong.AlbumId = id;
-                mappedNewSong.ArtistId = albumDto.ArtistId;
-
-                if (newSong.SongFile != null)
+                foreach (var newSong in albumDto.Songs.Where(s => s.Id == 0))
                 {
-                    var result = await _songService.AddSongAsync(newSong.SongFile);
-                    if (result.Error != null) throw new Exception();
+                    var mappedNewSong = _mapper.Map<Song>(newSong);
+                    mappedNewSong.AlbumId = id;
+                    mappedNewSong.ArtistId = albumDto.ArtistId;
 
-                    mappedNewSong.SongUrl = result.SecureUrl.AbsoluteUri;
-                    mappedNewSong.SongPublicId = result.PublicId;
+                    if (newSong.SongFile != null)
+                    {
+                        var result = await _songService.AddSongAsync(newSong.SongFile);
+                        if (result.Error != null) throw new Exception();
+
+                        mappedNewSong.SongUrl = result.SecureUrl.AbsoluteUri;
+                        mappedNewSong.SongPublicId = result.PublicId;
+                    }
+
+                    existingAlbum.Songs.Add(mappedNewSong);
                 }
-
-                existingAlbum.Songs.Add(mappedNewSong);
             }
 
             await _dbContext.SaveChangesAsync();
