@@ -19,6 +19,7 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Genre> Genres { get; set; }
     public DbSet<AlbumGenre> AlbumGenres { get; set; }
     public DbSet<SongGenre> SongGenres { get; set; }
+    public DbSet<PlaylistSong> PlaylistSongs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -77,6 +78,21 @@ public partial class OpenMusicDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(sg => sg.Song)
             .WithMany(s => s.SongGenres)
             .HasForeignKey(sg => sg.SongId);
+
+        modelBuilder.Entity<PlaylistSong>()
+        .HasKey(ps => new { ps.PlaylistId, ps.SongId });
+
+        modelBuilder.Entity<PlaylistSong>()
+            .HasOne(ps => ps.Playlist)
+            .WithMany(p => p.PlaylistSongs)
+            .HasForeignKey(ps => ps.PlaylistId);
+
+        modelBuilder.Entity<PlaylistSong>()
+            .HasOne(ps => ps.Song)
+            .WithMany(s => s.PlaylistSongs)
+            .HasForeignKey(ps => ps.SongId);
+
+
 
         modelBuilder.Entity<IdentityRole>().HasData(
             new IdentityRole

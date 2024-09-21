@@ -6,6 +6,7 @@ using OpenMusic.API.Data;
 using OpenMusic.API.Models.Album;
 using OpenMusic.API.Models.Artist;
 using OpenMusic.API.Models.Playlist;
+using OpenMusic.API.Models.Song;
 
 namespace OpenMusic.API.Repositories
 {
@@ -22,15 +23,39 @@ namespace OpenMusic.API.Repositories
 
         public async Task<PlaylistPlaybackDto> GetPlaylistForPlaybackAsync(int id)
         {
-            var playlist = await _dbContext.Playlists.Where(pl => pl.Id == id).Include(pl => pl.Songs).FirstAsync();
-            return _mapper.Map<PlaylistPlaybackDto>(playlist);
+            var playlist = await _dbContext.Playlists
+                .Include(p => p.PlaylistSongs)
+                .ThenInclude(ps => ps.Song)
+                .ProjectTo<PlaylistPlaybackDto>(_mapper.ConfigurationProvider).FirstAsync(p => p.Id == id);
+
+            if(playlist == null)
+            {
+                return null;
+            }
+
+            return new PlaylistPlaybackDto
+            {
+                CreatorId = playlist.CreatorId,
+                Id = playlist.Id,
+                Name = playlist.Name,
+                ImageUrl = playlist.ImageUrl,
+                ImagePublicId = playlist.ImagePublicId,
+                Description = playlist.Description,
+                Songs = playlist.PlaylistSongs.Select(ps => new SongPlaybackDto
+                {
+                    Id = ps.Song.Id,
+                    Title = ps.Song.Title,
+                    // Add other song properties as needed
+                }).ToList()
+            };
         }
 
         public async Task<List<PlaylistPlaybackDto>> GetUserPlaylistsAsync(string creatorId)
         {
             return await _dbContext.Playlists
                 .Where(pl => pl.CreatorId == creatorId)
-                .Include(pl => pl.Songs)
+                .Include(pl => pl.PlaylistSongs)
+                .Where(pls => pls.CreatorId == creatorId)
                 .ProjectTo<PlaylistPlaybackDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }

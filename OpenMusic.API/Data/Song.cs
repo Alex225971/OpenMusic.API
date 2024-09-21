@@ -1,4 +1,6 @@
-﻿namespace OpenMusic.API.Data
+﻿using System.Text.Json.Serialization;
+
+namespace OpenMusic.API.Data
 {
     public partial class Song
     {
@@ -13,6 +15,9 @@
         public DateOnly? ReleaseDate { get; set; }
         public int TotalListeners { get; set; }
         public virtual ICollection<SongGenre> SongGenres { get; set; } = new List<SongGenre>();
+        [JsonIgnore]
+        public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; } = new List<PlaylistSong>();
+        public virtual ICollection<Playlist> Playlists { get; set; } = new List<Playlist>();
 
     }
 }

@@ -99,19 +99,28 @@ namespace OpenMusic.API.Controllers
         {
             var creatorId = User.FindFirstValue("uid");
             var playlist = await _playlistRepository.GetAsync(id);
+            var song = await _dbContext.Songs.FindAsync(songId);
 
             if (id != playlist.Id) return BadRequest();
-            if (playlist == null) return NotFound();
 
-            var song = await _songRepository.GetAsync(songId);
+            if (playlist == null || song == null)
+            {
+                return NotFound();
+            }
 
             _mapper.Map(playlistDto, playlist);
 
-            playlist.Songs.Add(song);
-
             try
             {
-                await _playlistRepository.UpdateAsync(playlist);
+                var playlistSong = new PlaylistSong
+                {
+                    PlaylistId = id,
+                    SongId = songId
+                };
+
+                _dbContext.PlaylistSongs.Add(playlistSong);
+
+                await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -12,6 +12,7 @@ namespace OpenMusic.API.Models.Playlist
         public string? ImagePublicId { get; set; }
         public string CreatorId { get; set; }
         public List<SongPlaybackDto>? Songs { get; set; }
+        public List<PlaylistSong>? PlaylistSongs { get; set; }
 
     }
 }
