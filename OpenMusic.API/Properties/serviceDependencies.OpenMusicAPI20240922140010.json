@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/OpenMusicAPI20240922140010/providers/Microsoft.ServiceLinker/linkers/VaultUri_246C6652A7",
+      "secretStore": null,
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/OpenMusicAPIvault",
+      "type": "secrets.keyVault",
+      "connectionId": "VaultUri"
+    },
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/OpenMusicAPI20240922140010/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsOpenMusicDbConnection_9F09D79118",
+      "secretStore": "AzureKeyVault",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/open-music-server/databases/OpenMusicDb",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:OpenMusicDbConnection",
+      "dynamicId": null
+    }
+  }
+}
