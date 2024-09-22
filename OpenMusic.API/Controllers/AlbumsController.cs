@@ -111,7 +111,6 @@ namespace OpenMusic.API.Controllers
                         album.Songs.ElementAt(i).ArtistId = album.ArtistId;
                     }
                 }
-                //TODO - fix this to stop returning 500s even when it works
             }
 
             if (albumDto.Genres != null)
@@ -142,7 +141,6 @@ namespace OpenMusic.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> EditAlbum(int id, [FromForm]AlbumUpdateDto albumDto)
         {
-            //TODO - make sure an album can be edited without affecting songs, and songs can be edited throguh album
             var album = await _albumRepo.GetAsync(id);
 
             if (id != album.Id)

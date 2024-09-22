@@ -32,8 +32,6 @@ namespace OpenMusic.API.Controllers
             return Ok(artists);
         }
 
-        //TODO - somehow forgot to make playlists and songs many to many, make it so each song can be put in multiple playlists
-
         // GET: api/Artists/5
         [Authorize(Roles = "User,Admin")]
         [HttpGet("{id}")]
@@ -63,7 +61,6 @@ namespace OpenMusic.API.Controllers
         {
             try
             {
-                //TODO - Figure out if it is viable for a front end to insert an artist with albums and songs if the songId needs to be supplied and not guessed from my existing records
                 var artist = _mapper.Map<Artist>(artistDto);
                 await _artistRepo.AddAsync(artist);
 

@@ -23,6 +23,7 @@ namespace OpenMusic.API.Repositories
 
         public async Task<PlaylistPlaybackDto> GetPlaylistForPlaybackAsync(int id)
         {
+            //TODO - once this is working fully it needs optimising, there's a lot of waste because i used existing dtos instead of making more fit for purpose dtos
             var playlist = await _dbContext.Playlists
                 .Include(p => p.PlaylistSongs)
                 .ThenInclude(ps => ps.Song)
@@ -45,7 +46,14 @@ namespace OpenMusic.API.Repositories
                 {
                     Id = ps.Song.Id,
                     Title = ps.Song.Title,
-                    // Add other song properties as needed
+                    SongUrl = ps.Song.SongUrl,
+                    //AlbumId = ps.Song.AlbumId,
+                    //ArtistId = ps.Song.ArtistId,
+                    //AlbumTitle = ps.Song.Album.Title,
+                    //ArtistName = ps.Song.Artist.Name
+                    Album = _dbContext.Albums.Where(a => a.Id == ps.Song.AlbumId).ProjectTo<AlbumReadOnlyDto>(_mapper.ConfigurationProvider).FirstOrDefault(),
+                    Artist = _dbContext.Artists.Where(a => a.Id == ps.Song.ArtistId).ProjectTo<ArtistReadOnlyDto>(_mapper.ConfigurationProvider).FirstOrDefault(),
+
                 }).ToList()
             };
         }
