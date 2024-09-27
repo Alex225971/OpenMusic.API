@@ -70,10 +70,13 @@ namespace OpenMusic.API.Controllers
             {
                 var song = await _songRepo.GetForPlaybackAsync(id);
 
+                song.TotalListeners++;
+
                 if (song == null)
                 {
                     return NotFound();
                 }
+                
                 return Ok(song);
             }
             catch (Exception ex)
