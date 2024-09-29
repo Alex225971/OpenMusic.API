@@ -34,9 +34,9 @@ namespace OpenMusic.API.Repositories
                 .FirstAsync(a => a.Id == id);
         }
 
-        public async Task<List<AlbumDetailsDto>> GetAlbumsFromArtist(int id)
+        public async Task<List<AlbumSelectDto>> GetAlbumsFromArtist(int id)
         {
-            return await _dbContext.Albums.ProjectTo<AlbumDetailsDto>(_mapper.ConfigurationProvider).Where(a => a.ArtistId == id).ToListAsync();
+            return await _dbContext.Albums.ProjectTo<AlbumSelectDto>(_mapper.ConfigurationProvider).Where(a => a.ArtistId == id).ToListAsync();
         }
 
         public async Task<List<AlbumReadOnlyDto>> GetAllReadOnlyAsync()

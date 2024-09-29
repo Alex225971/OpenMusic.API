@@ -40,7 +40,7 @@ namespace OpenMusic.API.Controllers
         // GET: api/Albums/5
         [Authorize(Roles = "Admin")]
         [HttpGet("/api/Albums/Artist/{id}")]
-        public async Task<ActionResult<AlbumDetailsDto>> GetAlbumsFromArtistAsync(int id)
+        public async Task<ActionResult<AlbumSelectDto>> GetAlbumsFromArtistAsync(int id)
         {
             try
             {
