@@ -62,7 +62,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // GET: api/Songs/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User,Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<SongPlaybackDto>> GetSongForPlaybackAsync(int id)
         {
@@ -70,10 +70,13 @@ namespace OpenMusic.API.Controllers
             {
                 var song = await _songRepo.GetForPlaybackAsync(id);
 
+                song.TotalListeners++;
+
                 if (song == null)
                 {
                     return NotFound();
                 }
+                
                 return Ok(song);
             }
             catch (Exception ex)

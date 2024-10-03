@@ -21,12 +21,14 @@ namespace OpenMusic.API.Configurations
             CreateMap<string, DateOnly>().ConvertUsing<Helpers.DateOnlyToStringConverter>();
 
             CreateMap<ArtistDetailsDto, Artist>().ReverseMap();
+
             CreateMap<ArtistReadOnlyDto, Artist>().ReverseMap();
             CreateMap<ArtistCreateDto, Artist>()
                 //.ForMember(d => d.Albums, opt => opt.MapFrom(s => s.Albums))
                 .ReverseMap();
             CreateMap<ArtistUpdateDto, Artist>().ReverseMap();
             CreateMap<ArtistDetailsDto, ArtistReadOnlyDto>().ReverseMap();
+            CreateMap<ArtistSelectDto, Artist>().ReverseMap();
 
             CreateMap<AlbumDetailsDto, Album>()
                 .ForMember(d => d.AlbumGenres, opt => opt.MapFrom(a => a.Genres))
@@ -67,6 +69,8 @@ namespace OpenMusic.API.Configurations
             CreateMap<AlbumInArtistDto, Album>()
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
                 .ReverseMap();
+
+            CreateMap<AlbumSelectDto, Album>().ReverseMap();
 
             CreateMap<SongInAlbumDto, Song>().ReverseMap();
             CreateMap<SongPlaybackDto, Song>().ReverseMap();

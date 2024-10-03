@@ -12,6 +12,7 @@ namespace OpenMusic.API.Models.Song
         public string Title { get; set; }
         public string SongUrl { get; set; }
         public DateOnly ReleaseDate { get; set; }
+        public int TotalListeners { get; set; }
         public string? ArtistName { get; set; }
         public int? ArtistId { get; set; }
         public string? AlbumTitle { get; set; }

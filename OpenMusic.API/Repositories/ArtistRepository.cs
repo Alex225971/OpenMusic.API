@@ -39,6 +39,13 @@ namespace OpenMusic.API.Repositories
             return _mapper.Map<ArtistReadOnlyDto>(artist);
         }
 
+        public async Task<List<ArtistSelectDto>> GetArtistsForSelectAsync()
+        {
+            return await _dbContext.Artists
+                    .ProjectTo<ArtistSelectDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+        }
+
         public async Task<List<ArtistDetailsDto>> SearchForArtistAsync(QueryParams queryParams)
         {
             return await _dbContext.Artists

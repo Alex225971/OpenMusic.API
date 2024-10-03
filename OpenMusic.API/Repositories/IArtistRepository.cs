@@ -9,6 +9,7 @@ namespace OpenMusic.API.Repositories
     {
         Task<ArtistDetailsDto> GetArtistDetailsAsync(int id);
         Task<ArtistReadOnlyDto> GetArtistReadOnlyAsync(int id);
+        Task<List<ArtistSelectDto>> GetArtistsForSelectAsync();
         Task<List<ArtistDetailsDto>> SearchForArtistAsync(QueryParams queryParams);
     }
 }

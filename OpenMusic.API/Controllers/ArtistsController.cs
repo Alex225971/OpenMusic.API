@@ -32,6 +32,15 @@ namespace OpenMusic.API.Controllers
             return Ok(artists);
         }
 
+        // GET: api/Artists
+        [Authorize(Roles = "Admin")]
+        [HttpGet("ArtistsForSelect")]
+        public async Task<ActionResult<IEnumerable<ArtistReadOnlyDto>>> GetArtistsForSelectAsync()
+        {
+            var artists = await _artistRepo.GetArtistsForSelectAsync();
+            return Ok(artists);
+        }
+
         // GET: api/Artists/5
         [Authorize(Roles = "User,Admin")]
         [HttpGet("{id}")]
