@@ -93,7 +93,7 @@ namespace OpenMusic.API.Controllers
             return StatusCode(201, playlist);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User,Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> EditPlaylistAsync(int id, [FromBody] PlaylistUpdateDto? playlistDto, int songId)
         {

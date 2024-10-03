@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +26,7 @@ namespace OpenMusic.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User,Admin")]
         [Route("user")]
         public async Task<ActionResult<UserDto>> GetUserById(string id)
         {
@@ -73,6 +75,7 @@ namespace OpenMusic.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         [Route("login")]
         public async Task<ActionResult<AuthResponse>> Login(UserLoginDto userDto)
         {

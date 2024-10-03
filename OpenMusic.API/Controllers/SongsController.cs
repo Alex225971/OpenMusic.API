@@ -62,7 +62,7 @@ namespace OpenMusic.API.Controllers
         }
 
         // GET: api/Songs/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User,Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<SongPlaybackDto>> GetSongForPlaybackAsync(int id)
         {
