@@ -75,7 +75,6 @@ namespace OpenMusic.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
         [Route("login")]
         public async Task<ActionResult<AuthResponse>> Login(UserLoginDto userDto)
         {
