@@ -101,7 +101,7 @@ namespace OpenMusic.API.Controllers
             }
             catch (Exception e)
             {
-                return Problem($"Something went wrong with login {nameof(Login)}", statusCode: 500);
+                return Problem($"Something went wrong with login {e}", statusCode: 500);
             }
         }
 
