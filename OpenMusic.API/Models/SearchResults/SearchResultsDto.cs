@@ -7,9 +7,9 @@ namespace OpenMusic.API.Models.SearchResults
 {
     public class SearchResultsDto
     {
-        public List<SongPlaybackDto> Songs { get; set; }
-        public List<AlbumReadOnlyDto> Albums { get; set; }
-        public List<ArtistDetailsDto> Artists { get; set; }
+        public List<SongSearchDto> Songs { get; set; }
+        public List<AlbumSearchDto> Albums { get; set; }
+        public List<ArtistSearchDto> Artists { get; set; }
         public List<PlaylistPlaybackDto> Playlists { get; set; }
     }
 }

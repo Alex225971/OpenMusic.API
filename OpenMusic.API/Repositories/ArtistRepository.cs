@@ -46,7 +46,7 @@ namespace OpenMusic.API.Repositories
                     .ToListAsync();
         }
 
-        public async Task<List<ArtistDetailsDto>> SearchForArtistAsync(QueryParams queryParams)
+        public async Task<List<ArtistSearchDto>> SearchForArtistAsync(QueryParams queryParams)
         {
             return await _dbContext.Artists
                 .Where(s => s.Name.Contains(queryParams.queryString))
@@ -54,7 +54,7 @@ namespace OpenMusic.API.Repositories
                 .Include(a => a.Songs)
                 .Skip(queryParams.PageSize * (queryParams.PageNumber - 1))
                 .Take(queryParams.PageSize)
-                .ProjectTo<ArtistDetailsDto>(_mapper.ConfigurationProvider).ToListAsync();
+                .ProjectTo<ArtistSearchDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }

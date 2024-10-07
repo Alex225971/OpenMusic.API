@@ -102,6 +102,9 @@ namespace OpenMusic.API.Configurations
             CreateMap<Playlist, PlaylistPlaybackDto>().ReverseMap();
             CreateMap<Playlist, PlaylistCreateDto>().ReverseMap();
 
+            CreateMap<Album, AlbumSearchDto>().ReverseMap();
+            CreateMap<Song, SongSearchDto>().ReverseMap();
+            CreateMap<Artist, ArtistSearchDto>().ReverseMap();
         }
     }
 }

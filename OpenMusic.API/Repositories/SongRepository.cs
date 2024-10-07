@@ -40,7 +40,7 @@ namespace OpenMusic.API.Repositories
                 .ProjectTo<SongDetailsDto>(_mapper.ConfigurationProvider).FirstAsync(s => s.Id == id);
         }
 
-        public async Task<List<SongPlaybackDto>> SearchForSongAsync(QueryParams queryParams)
+        public async Task<List<SongSearchDto>> SearchForSongAsync(QueryParams queryParams)
         {
             return await _dbContext.Songs
                 .Include(s => s.Artist)
@@ -48,7 +48,7 @@ namespace OpenMusic.API.Repositories
                 .Where(s => s.Title.Contains(queryParams.queryString) || s.Album.Title.Contains(queryParams.queryString) || s.Artist.Name.Contains(queryParams.queryString))
                 .Skip(queryParams.PageSize * (queryParams.PageNumber -1))
                 .Take(queryParams.PageSize)
-                .ProjectTo<SongPlaybackDto>(_mapper.ConfigurationProvider).ToListAsync();
+                .ProjectTo<SongSearchDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<List<SongDetailsDto>> GetAllSongDetailsAsync()

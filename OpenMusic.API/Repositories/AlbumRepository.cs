@@ -49,14 +49,14 @@ namespace OpenMusic.API.Repositories
             return await _dbContext.Albums.Include(b => b.Artist).ProjectTo<AlbumDetailsDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task<List<AlbumReadOnlyDto>> SearchForAlbumAsync(QueryParams queryParams)
+        public async Task<List<AlbumSearchDto>> SearchForAlbumAsync(QueryParams queryParams)
         {
             return await _dbContext.Albums
                 .Include(s => s.Songs)
                 .Where(a => a.Title.Contains(queryParams.queryString))
                 .Skip(queryParams.PageSize * (queryParams.PageNumber - 1))
                 .Take(queryParams.PageSize)
-                .ProjectTo<AlbumReadOnlyDto>(_mapper.ConfigurationProvider).ToListAsync();
+                .ProjectTo<AlbumSearchDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task UpdateAlbumWithSongs(int id, AlbumUpdateDto albumDto)

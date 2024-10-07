@@ -8,7 +8,7 @@ namespace OpenMusic.API.Repositories
     public interface ISongRepository : IGenericRepository<Song>
     {
         Task<SongPlaybackDto> GetForPlaybackAsync(int id);
-        Task<List<SongPlaybackDto>> SearchForSongAsync(QueryParams queryParams);
+        Task<List<SongSearchDto>> SearchForSongAsync(QueryParams queryParams);
         Task<List<SongPlaybackDto>> GetSongsFromArtistAsync(int id);
         Task<List<SongDetailsDto>> GetAllSongDetailsAsync();
         Task<SongDetailsDto> GetSongDetailsAsync(int id);
