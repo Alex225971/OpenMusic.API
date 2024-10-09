@@ -85,6 +85,7 @@ namespace OpenMusic.API.Controllers
         public async Task<ActionResult<AlbumCreateDto>> CreateAlbumAsync([FromForm] AlbumCreateDto albumDto, IFormFile image)
         {
             var album = _mapper.Map<Album>(albumDto);
+            album.LastUpdatedAt = DateOnly.FromDateTime(DateTime.Now);
 
             //Adding the image to cloudinary and setting image url
             if (image != null)
@@ -142,6 +143,12 @@ namespace OpenMusic.API.Controllers
         public async Task<ActionResult> EditAlbum(int id, [FromForm]AlbumUpdateDto albumDto)
         {
             var album = await _albumRepo.GetAsync(id);
+            album.LastUpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+
+            foreach(var song in album.Songs)
+            {
+                song.Year = album.Year;
+            }
 
             if (id != album.Id)
             {

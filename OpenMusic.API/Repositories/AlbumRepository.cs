@@ -86,7 +86,8 @@ namespace OpenMusic.API.Repositories
                     existingSong.ArtistId = albumDto.ArtistId;
                     //Update existing song properties
                     existingSong.Title = updatedSong.Title;
-                    existingSong.ReleaseDate = DateOnly.Parse(updatedSong.ReleaseDate);
+                    //TODO - update this DTO property when I have sorted the entity properties for certain
+                    existingSong.Year = existingAlbum.Year;
                 }
                 else
                 {

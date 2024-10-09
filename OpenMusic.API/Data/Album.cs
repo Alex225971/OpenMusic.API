@@ -11,5 +11,7 @@
         public int? ArtistId { get; set; }
         public virtual Artist? Artist { get; set; }
         public virtual ICollection<AlbumGenre> AlbumGenres { get; set; } = new List<AlbumGenre>();
+        public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly LastUpdatedAt { get; set; }
     }
 }
