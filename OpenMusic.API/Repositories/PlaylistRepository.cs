@@ -47,6 +47,7 @@ namespace OpenMusic.API.Repositories
                     Id = ps.Song.Id,
                     Title = ps.Song.Title,
                     SongUrl = ps.Song.SongUrl,
+                    Year = ps.Song.Year,
                     //AlbumId = ps.Song.AlbumId,
                     //ArtistId = ps.Song.ArtistId,
                     //AlbumTitle = ps.Song.Album.Title,

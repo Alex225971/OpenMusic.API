@@ -71,6 +71,7 @@ namespace OpenMusic.API.Controllers
             try
             {
                 var artist = _mapper.Map<Artist>(artistDto);
+                artist.LastUpdatedAt = DateOnly.FromDateTime(DateTime.Now);
                 await _artistRepo.AddAsync(artist);
 
                 return StatusCode(201, artist);
@@ -91,6 +92,7 @@ namespace OpenMusic.API.Controllers
                 return BadRequest();
             }
             var artist = await _artistRepo.GetAsync(id);
+            artist.LastUpdatedAt = DateOnly.FromDateTime(DateTime.Now);
 
             if (artist == null)
             {

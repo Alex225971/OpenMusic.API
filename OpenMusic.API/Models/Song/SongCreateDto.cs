@@ -12,7 +12,7 @@ namespace OpenMusic.API.Models.Song
         public required string Title { get; set; }
         public string SongUrl { get; set; }
         [JsonConverter(typeof(DateOnlyConverter))]
-        public string? ReleaseDate { get; set; }
+        public int? Year { get; set; }
         public int? AlbumId { get; set; }
         public string? AlbumTitle { get; set; }
         public int? ArtistId { get; set; }

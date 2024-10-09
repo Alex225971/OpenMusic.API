@@ -92,9 +92,9 @@ namespace OpenMusic.API.Controllers
         public async Task<ActionResult<SongCreateDto>> CreateSongAsync([FromForm] SongCreateDto songDto, IFormFile songFile)
         {
             var song = _mapper.Map<Song>(songDto);
-            //song.ReleaseDate = DateOnly.Parse(songDto.ReleaseDate);
+            song.LastUpdatedAt = DateOnly.FromDateTime(DateTime.Now);
 
-            if(songFile != null)
+            if (songFile != null)
             {
                 var result = await _songService.AddSongAsync(songFile);
                 if (result.Error != null) return BadRequest(result.Error.Message);
@@ -146,6 +146,8 @@ namespace OpenMusic.API.Controllers
             }
 
             _mapper.Map(songDto, song);
+
+            song.LastUpdatedAt = DateOnly.FromDateTime(DateTime.Now);
 
             try
             {

@@ -67,6 +67,7 @@ namespace OpenMusic.API.Controllers
         {
             var creatorId = User.FindFirstValue("uid");
             var playlist = _mapper.Map<Playlist>(playlistDto);
+            playlist.LastUpdatedAt = DateOnly.FromDateTime(DateTime.Now);
 
             //Adding the image to cloudinary and setting image url
             if (image != null)
@@ -100,6 +101,7 @@ namespace OpenMusic.API.Controllers
             var creatorId = User.FindFirstValue("uid");
             var playlist = await _playlistRepository.GetAsync(id);
             var song = await _dbContext.Songs.FindAsync(songId);
+            playlist.LastUpdatedAt = DateOnly.FromDateTime(DateTime.Now);
 
             if (id != playlist.Id) return BadRequest();
 
